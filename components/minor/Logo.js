@@ -1,7 +1,13 @@
 import { Image } from 'react-native';
 
+import { ContextoTema } from '../../contextoTema';
+
 export const Logo = () => (
-	<Image
-	  source={require('../../assets/TimerSim.png')}
-	  style={{height: '20%', resizeMode: 'contain' }} />
+	<ContextoTema.Consumer>
+		{({estilo, trocaTema}) => (
+		<Image
+		source={estilo.texto['color'] == "#fff" ? require('../../assets/TimerSimDark.png') : require('../../assets/TimerSim.png')}
+		style={{height: '20%', resizeMode: 'contain' }} />
+		)}
+	</ContextoTema.Consumer>
 )  
