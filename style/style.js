@@ -2,18 +2,40 @@ import { StyleSheet, Dimensions } from 'react-native';
 import { lightColors, darkColors } from './colorPalletes.js';
 import { fuseStyles } from './utilitaries.js' ;
 
-const vh = Dimensions.get('window').height;
+const vh = Dimensions.get('window').height/100;
+const vw = Dimensions.get('window').width/100;
 const em = 14;
 
 const styleComum = StyleSheet.create({
 	texto: {
 		fontSize: em, 
 	},
-	
+
+	subtitulo: {
+		fontSize: 1.3*em,
+		fontWeight: 'bold',
+	},
+
+	duracaoPicker: {
+		height: 25 * vh,
+		width: 80 * vw,
+		alignItems: 'center',
+		justifyContent: 'space-between',
+		padding: 1 * em,
+		borderWidth: 0.3*em,
+		borderRadius: 1 * em,
+	},
+
 	container: {
 	  	flex: 1,
 	  	alignItems: 'center',
 	  	justifyContent: 'center',
+	},
+
+	rowFlex: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'center',
 	},
 
 	etiqueta: {
@@ -48,10 +70,19 @@ const styleComum = StyleSheet.create({
 			color: cores.corFontePrincipal,
 		},
 
+		subtitulo: {
+			color: cores.corFonteRealce,
+		},
+
 		container: {
 			backgroundColor: cores.fundoPrimario,
 		},
 	
+		duracaoPicker: {
+			borderColor: cores.borders,
+			backgroundColor: cores.fundoSecundarioHover,
+		},
+
 		etiqueta: {
 			backgroundColor: cores.fundoSecundarioHover,
 		},

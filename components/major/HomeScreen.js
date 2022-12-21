@@ -6,7 +6,7 @@ import { Etiqueta } from '../minor/Etiqueta.js';
 import { Botao } from '../minor/Botao.js';
 
 import { ContextoTema } from '../../contextoTema';
-import { InputNumerico } from '../minor/InputNumerico.js';
+import { DuracaoPicker } from '../intermediate/DuracaoPicker.js';
 
 export { HomeScreen as HomeScreen }
 
@@ -16,8 +16,7 @@ function HomeScreen() {
 			{({estilo, trocaTema}) => (
 				<View style={estilo.container}>
 					<Logo/>
-					<InputNumerico callback={(x) => console.log(x)} step={5} max={60}/>
-					<InputNumerico callback={(x) => console.log(x)} step={1} max={6}/>
+					<DuracaoPicker/>
 					<Etiqueta h='1' m='30'/>
 					<Etiqueta h='1' m='00'/>
 					<Botao texto='Aperte me' callback={ () => {
