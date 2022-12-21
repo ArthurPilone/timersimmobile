@@ -13,6 +13,7 @@ export const InputNumerico = (props) => (
 				leftButtonBackgroundColor={estilo.botao.backgroundColor}
 				borderColor={estilo.botao.borderBottomColor}
 				iconStyle={{color:estilo.texto.color}}
+				value={props.initialValue}
 				rounded step={props.step} minValue={0} maxValue={props.max} />
 		)}
 	</ContextoTema.Consumer>
