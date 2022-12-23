@@ -14,6 +14,7 @@ const styleComum = StyleSheet.create({
 	subtitulo: {
 		fontSize: 1.3*em,
 		fontWeight: 'bold',
+		margin: 0.8 * em,
 	},
 
 	duracaoPicker: {
@@ -57,6 +58,12 @@ const styleComum = StyleSheet.create({
 		padding: 0.3 * em,
 		borderRadius: 0.2 * em,
 	},
+
+	page:{
+		flex: 1,
+		width: 100*vw,
+	},
+
   });
 
 /**
