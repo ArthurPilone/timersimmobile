@@ -17,11 +17,15 @@ export const DuracaoPicker = (props) => {
 			<View style={estilo.duracaoPicker} >
 				<Text style={estilo.subtitulo}>Tempo de Prova</Text>
 				<View style={estilo.rowFlex}>
-					<InputNumerico initialValue={horas} callback={setHoras} step={1} max={6}/>
+					<InputNumerico initialValue={horas} 
+					callback={ (h) => {setHoras(h); props.atualizarTempo(h*60 + minutos)}} 
+					step={1} max={6}/>
 					<Text style={[estilo.texto, {marginLeft: 15}]}>Horas e</Text>
 				</View>
 				<View style={estilo.rowFlex}>
-					<InputNumerico initialValue={minutos} callback={setMinutos} step={5} max={55}/>
+					<InputNumerico initialValue={minutos} 
+					callback={ (m) => {setMinutos(m); props.atualizarTempo(horas*60 + m)}}  
+					step={5} max={55}/>
 					<Text style={[estilo.texto, {marginLeft: 15}]}>minutos</Text>
 				</View>	
 			</View>	
