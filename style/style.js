@@ -14,7 +14,13 @@ const styleComum = StyleSheet.create({
 	subtitulo: {
 		fontSize: 1.3*em,
 		fontWeight: 'bold',
-		margin: 0.8 * em,
+		margin: 0.4 * em,
+	},
+
+	tempoProva: {
+		fontSize: 2.3*em,
+		margin: 0.5 * em,
+		marginTop: 0,
 	},
 
 	duracaoPicker: {
@@ -23,6 +29,16 @@ const styleComum = StyleSheet.create({
 		alignItems: 'center',
 		justifyContent: 'space-between',
 		padding: 1 * em,
+		borderWidth: 0.3*em,
+		borderRadius: 1 * em,
+	},
+
+	timerDisplay: {
+		height: 15 * vh,
+		width: 60 * vw,
+		alignItems: 'center',
+		justifyContent: 'space-between',
+		padding: 0.8 * em,
 		borderWidth: 0.3*em,
 		borderRadius: 1 * em,
 	},
@@ -62,6 +78,7 @@ const styleComum = StyleSheet.create({
 	page:{
 		flex: 1,
 		width: 100*vw,
+		minHeight: 100*vh,
 	},
 
   });
@@ -81,11 +98,20 @@ const styleComum = StyleSheet.create({
 			color: cores.corFonteRealce,
 		},
 
+		tempoProva: {
+			color: cores.corFonteRealce,
+		},
+
 		container: {
 			backgroundColor: cores.fundoPrimario,
 		},
 	
 		duracaoPicker: {
+			borderColor: cores.borders,
+			backgroundColor: cores.fundoSecundarioHover,
+		},
+
+		timerDisplay: {
 			borderColor: cores.borders,
 			backgroundColor: cores.fundoSecundarioHover,
 		},

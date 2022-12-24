@@ -8,9 +8,9 @@ import { ProvaScreen } from "./ProvaScreen"
 export { ContainedApp as ContainedApp }
 
 function ContainedApp(props) {
-	let [scrollable, setScrollable] =  React.useState(false);
-	
+	let [scrollable, setScrollable] =  React.useState(false)
 	let [refScrollable, setRefScrollable] = React.useState(null)
+	let [duracaoProva, setDuracao] = React.useState(0)
 
 	let trocarPagina = (praFrente,scroller) => {
 		if(praFrente){
@@ -22,8 +22,11 @@ function ContainedApp(props) {
 
 	return (
 		<ScrollView ref={setRefScrollable} horizontal={true} pagingEnabled scrollEnabled={scrollable}>
-            <HomeScreen a={ () => {trocarPagina(true,refScrollable)}}/>
-            <ProvaScreen a={ () => {trocarPagina(false,refScrollable)}}/>
+            <HomeScreen 
+				proxPagina={ () => {trocarPagina(true,refScrollable)}}
+				setDuracao={setDuracao}
+			/>
+            <ProvaScreen hs={Math.floor(duracaoProva/60)} ms={duracaoProva%60} s={0} a={ () => {trocarPagina(false,refScrollable)}}/>
         </ScrollView>
 	);
   }

@@ -25,7 +25,11 @@ function HomeScreen(props) {
 						console.log(tempoProva + " minutos de prova")}
 					}/>
 					<Botao texto='Trocar tema' callback={trocaTema} />
-					<BotaoDesativavel texto='Começar Prova!' ativo={tempoProva!=0} callback={props.a} />
+					<BotaoDesativavel texto='Começar Prova!' ativo={tempoProva!=0}
+						 callback={() => {
+							props.setDuracao(tempoProva)
+							props.proxPagina()
+						}} />
 				</View>
 			)}
 		</ContextoTema.Consumer>
