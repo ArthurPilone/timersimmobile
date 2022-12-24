@@ -12,9 +12,9 @@ export const BotaoDesativavel = (props) => {
 	<ContextoTema.Consumer>
 		{({estilo, trocaTema}) => {
 			var propiedades = {
-				style: (pressionado || ! props.ativado) ? estilo.botaoPressionado : estilo.botao, 
-				onPressIn: () => { if(props.ativado){setPressionado(true);props.callback()}},  
-				onPressOut: () => { if(props.ativado){setPressionado(false)}},           
+				style: (pressionado || ! props.ativo) ? estilo.botaoPressionado : estilo.botao, 
+				onPressIn: () => { if(props.ativo){setPressionado(true);props.callback()}},  
+				onPressOut: () => { if(props.ativo){setPressionado(false)}},           
 			};
 			
 			return (<Pressable {...propiedades} >
