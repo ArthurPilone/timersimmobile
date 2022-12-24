@@ -10,7 +10,7 @@ export { ContainedApp as ContainedApp }
 function ContainedApp(props) {
 	let [scrollable, setScrollable] =  React.useState(false);
 	
-	let refScrollable = React.createRef()
+	let [refScrollable, setRefScrollable] = React.useState(null)
 
 	let trocarPagina = (praFrente,scroller) => {
 		if(praFrente){
@@ -21,9 +21,9 @@ function ContainedApp(props) {
 	}
 
 	return (
-		<ScrollView ref={refScrollable} horizontal={true} pagingEnabled scrollEnabled={scrollable}>
-            <HomeScreen a={ () => {trocarPagina(true,refScrollable.current)}}/>
-            <ProvaScreen a={ () => {trocarPagina(false,refScrollable.current)}}  />
+		<ScrollView ref={setRefScrollable} horizontal={true} pagingEnabled scrollEnabled={scrollable}>
+            <HomeScreen a={ () => {trocarPagina(true,refScrollable)}}/>
+            <ProvaScreen a={ () => {trocarPagina(false,refScrollable)}}/>
         </ScrollView>
 	);
   }
