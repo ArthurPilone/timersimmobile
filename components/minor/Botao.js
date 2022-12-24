@@ -1,26 +1,5 @@
-import * as React from 'react';
+import { BotaoDesativavel } from "./BotaoDesativavel";
 
-import { Pressable, Text } from 'react-native';
-
-import { ContextoTema } from '../../contextoTema';
-
-export const Botao = (props) => {
-
-	var [ pressionado, setPressionado ] = React.useState(false);
-
-	return (
-	<ContextoTema.Consumer>
-		{({estilo, trocaTema}) => {
-			var propiedades = {
-				style: pressionado ? estilo.botaoPressionado : estilo.botao, 
-				onPressIn: () => {setPressionado(true);props.callback()},  
-				onPressOut: () => setPressionado(false),           
-			};
-			
-			return (<Pressable {...propiedades} >
-				<Text style={estilo.texto}>{props.texto}</Text>
-			</Pressable>)
-		}}
-	</ContextoTema.Consumer>
-	)
-}  
+export const Botao = (props) => (
+	<BotaoDesativavel callback={props.callback} texto={props.texto} ativado={true}/>	
+)
