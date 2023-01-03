@@ -20,14 +20,11 @@ function HomeScreen(props) {
 				<View style={[estilo.container, estilo.page]}>
 					<Logo/>
 					<Text style={estilo.subtitulo}>Bora fazer uma prova?</Text>
-					<DuracaoPicker atualizarTempo={(x) => {
-						setTempoProva(x);
-						console.log(tempoProva + " minutos de prova")}
-					}/>
+					<DuracaoPicker atualizarTempo={setTempoProva}/>
 					<Botao texto='Trocar tema' callback={trocaTema} />
 					<BotaoDesativavel texto='Começar Prova!' ativo={tempoProva!=0}
 						 callback={() => {
-							props.setDuracao(tempoProva)
+							props.criaTimer(tempoProva)
 							props.proxPagina()
 						}} />
 				</View>

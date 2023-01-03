@@ -5,12 +5,15 @@ import { Dimensions, ScrollView } from 'react-native';
 import { HomeScreen } from "./HomeScreen"
 import { ProvaScreen } from "./ProvaScreen"
 
+import { Timer } from '../../classes/Timer';
+
 export { ContainedApp as ContainedApp }
 
 function ContainedApp(props) {
 	let [scrollable, setScrollable] =  React.useState(false)
 	let [refScrollable, setRefScrollable] = React.useState(null)
-	let [duracaoProva, setDuracao] = React.useState(0)
+
+	let [timer, setTimer] = React.useState(new Timer(0))
 
 	let trocarPagina = (praFrente,scroller) => {
 		if(praFrente){
@@ -23,10 +26,12 @@ function ContainedApp(props) {
 	return (
 		<ScrollView ref={setRefScrollable} horizontal={true} pagingEnabled scrollEnabled={scrollable}>
             <HomeScreen 
+				criaTimer={ (duracao) => {setTimer(new Timer(duracao))}}
 				proxPagina={ () => {trocarPagina(true,refScrollable)}}
-				setDuracao={setDuracao}
 			/>
-            <ProvaScreen hs={Math.floor(duracaoProva/60)} ms={duracaoProva%60} s={0} a={ () => {trocarPagina(false,refScrollable)}}/>
+            <ProvaScreen 
+				timerProva={timer} 
+				a={ () => {trocarPagina(false,refScrollable)}}/>
         </ScrollView>
 	);
   }
