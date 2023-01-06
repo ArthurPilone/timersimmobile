@@ -1,4 +1,3 @@
-
 export {Timer as Timer}
 
 class Timer {
@@ -9,7 +8,9 @@ class Timer {
 		this.restanteS = 0
 		this.restanteM = duracaoMin%60
 		this.restanteH = Math.floor(duracaoMin/60)
+		
 		this.pausado = true;
+		this.ultimoTick = Date.now();
 
 		this.renderS = null;
 		this.renderM = null;
@@ -17,18 +18,41 @@ class Timer {
 
 		this.loaded = false;
 
-		if((!duracaoMin) || duracaoMin == 0){
-			delete this
-			return
-		}
+	}
 
-		// setTimeout( () => {
-		// 	this.restanteMs-=500
-		// 	this.restanteH -= 2
-		// 	console.log("Mudado as hora")
-		// 	this.updateView()
-		// } , 4000 )
+	computeElapsedTime(){
+		agora = Date.now()
+		elapsed = agora - this.ultimoTick
+		this.restanteMs -= elapsed
+		this.ultimoTick = agora
+		this.updateRestantesFromMs()
+	}
 
+	updateRestantesFromMs(){
+		this.restanteH = Math.floor(this.restanteMs / (1000 * 60 * 60))
+		this.restanteM = Math.floor(this.restanteMs / (1000 * 60)) % 60
+		this.restanteS = Math.floor(this.restanteMs / 1000) % 60
+	}
+
+	passo(){
+		if(!this.pausado){
+			this.computeElapsedTime()
+			this.updateView()
+			setTimeout(() => {this.passo()},100)
+		}	
+	}
+
+	pause(timer){
+		console.log(timer)
+		timer.pausado = true;
+		timer.computeElapsedTime()
+	}
+
+	unpause(timer){
+		console.log(timer)
+		timer.pausado = false;
+		timer.ultimoTick = Date.now()
+		setTimeout(() => {timer.passo()},100)
 	}
 
 	toString(){
@@ -38,8 +62,18 @@ class Timer {
 
 	updateView(){
 		try {
-			this.renderS(this.restanteS)
-			this.renderM(this.restanteM)
+			if(this.restanteS < 10){
+				this.renderS("0" + this.restanteS)
+			}else{
+				this.renderS(this.restanteS)
+			}
+			
+			if(this.restanteM < 10){
+				this.renderM("0" + this.restanteM)
+			}else{
+				this.renderM(this.restanteM)
+			}
+
 			this.renderH(this.restanteH)
 		} catch (error) {
 			console.log("Não foi possível atualizar display do timer: " + error)
