@@ -17,6 +17,7 @@ function ProvaScreen(props){
 	let [provaM, setMValue] = React.useState(timer.getM())
 	let [provaH, setHValue] = React.useState(timer.getH())
 
+
 	timer.loadTimer(setSValue,setMValue,setHValue)
 
 	return (
@@ -24,6 +25,8 @@ function ProvaScreen(props){
 			{({estilo, trocaTema}) => (
 				<View style={[estilo.container, estilo.page]}>
 					<TimerDisplay hs={provaH} ms={provaM} s={provaS}/>
+					<Botao texto="Pausa" callback={props.timerProva.pause} args={[timer]}/>
+					<Botao texto="Despausa" callback={props.timerProva.unpause} args={[timer]}/>
 					<Botao texto="voltaaa" callback={props.a}></Botao>
 				</View>
 			)}

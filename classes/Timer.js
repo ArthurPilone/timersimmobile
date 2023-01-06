@@ -43,13 +43,13 @@ class Timer {
 	}
 
 	pause(timer){
-		console.log(timer)
+		if(timer.pausado){return}
 		timer.pausado = true;
 		timer.computeElapsedTime()
 	}
 
 	unpause(timer){
-		console.log(timer)
+		if(! timer.pausado){return}
 		timer.pausado = false;
 		timer.ultimoTick = Date.now()
 		setTimeout(() => {timer.passo()},100)
@@ -112,5 +112,12 @@ class Timer {
 
 	getH() {
 		return this.restanteH
+	}
+
+	free(){
+		this.pausado = true
+		this.renderS = () => {}
+		this.renderM = () => {}
+		this.renderH = () => {}
 	}
 }

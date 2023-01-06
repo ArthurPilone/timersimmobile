@@ -26,7 +26,7 @@ function ContainedApp(props) {
 	return (
 		<ScrollView ref={setRefScrollable} horizontal={true} pagingEnabled scrollEnabled={scrollable}>
             <HomeScreen 
-				criaTimer={ (duracao) => {setTimer(new Timer(duracao))}}
+				criaTimer={ (duracao) => {timer.free();setTimer(new Timer(duracao))}}
 				proxPagina={ () => {trocarPagina(true,refScrollable)}}
 			/>
             <ProvaScreen 
