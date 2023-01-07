@@ -4,6 +4,7 @@ class Timer {
 
 	constructor(duracaoMin){
 		this.duracaoMs = duracaoMin*60*1000
+		this.duracaoMin = duracaoMin
 		this.restanteMs = this.duracaoMs
 		this.restanteS = 0
 		this.restanteM = duracaoMin%60
@@ -18,6 +19,26 @@ class Timer {
 
 		this.loaded = false;
 
+		this.nextTag = 0;
+	}
+
+	buildTags(){
+		this.tags = [];
+		let testTime = this.duracaoMin
+		while(testTime > 30){
+			this.tags.push(testTime)
+			testTime -= 30
+		}
+		while(testTime >= 15){
+			this.tags.push(testTime)
+			testTime -= 15
+		}
+		if(testTime != 0){
+			this.tags.push(testTime)
+		}
+		this.tags.push(0)
+
+		console.log("Etiquetas: " +  this.tags)
 	}
 
 	computeElapsedTime(){
@@ -83,6 +104,7 @@ class Timer {
 
 	loadTimer(fs,fm,fh){
 		if(this.loaded)	return;
+		this.buildTags();
 		this.setSRenderCallback(fs)
 		this.setMRenderCallback(fm)
 		this.setHRenderCallback(fh)
