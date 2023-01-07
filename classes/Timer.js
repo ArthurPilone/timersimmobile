@@ -11,6 +11,7 @@ class Timer {
 		this.restanteH = Math.floor(duracaoMin/60)
 		
 		this.pausado = true;
+		this.acabou = false;
 		this.ultimoTick = Date.now();
 
 		this.renderS = null;
@@ -25,7 +26,7 @@ class Timer {
 	buildTags(){
 		this.tags = [];
 		let testTime = this.duracaoMin
-		while(testTime > 30){
+		while(testTime > 60){
 			this.tags.push(testTime)
 			testTime -= 30
 		}
@@ -58,27 +59,41 @@ class Timer {
 	passo(){
 		if(!this.pausado){
 			this.computeElapsedTime()
+			this.checkTags()
+			this.checkForTestEnd()
 			this.updateView()
 			setTimeout(() => {this.passo()},100)
 		}	
 	}
 
 	pause(timer){
-		if(timer.pausado){return}
+		if(timer.pausado || timer.acabou){return}
 		timer.pausado = true;
 		timer.computeElapsedTime()
 	}
 
 	unpause(timer){
-		if(! timer.pausado){return}
+		if(!timer.pausado || timer.acabou){return}
 		timer.pausado = false;
 		timer.ultimoTick = Date.now()
 		setTimeout(() => {timer.passo()},100)
 	}
 
-	toString(){
-		return "Timer " + (this.pausado? "pausado [" : "rodando [")
-		 + this.restanteMs +"/" + this.duracaoMs + "]"
+	checkTags(){
+		let nextTagMin = this.tags[this.nextTag]
+		if(nextTagMin >= (this.restanteMs / (60* 1000))){
+			console.log("Tirando a etiqueta: " + nextTagMin)
+			this.nextTag++
+		}
+	}
+
+	checkForTestEnd(){
+		if(this.restanteMs <= 0){
+			this.acabou = true
+			this.pausado = true
+			this.restanteMs = 0
+			this.updateRestantesFromMs()
+		}
 	}
 
 	updateView(){
@@ -134,6 +149,11 @@ class Timer {
 
 	getH() {
 		return this.restanteH
+	}
+
+	toString(){
+		return "Timer " + (this.pausado? "pausado [" : "rodando [")
+		 + this.restanteMs +"/" + this.duracaoMs + "]"
 	}
 
 	free(){
