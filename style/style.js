@@ -7,6 +7,10 @@ const vw = Dimensions.get('window').width/100;
 const em = 14;
 
 const styleComum = StyleSheet.create({
+	textoLeve: {
+		fontSize: em, 
+	},
+
 	texto: {
 		fontSize: em, 
 	},
@@ -56,10 +60,18 @@ const styleComum = StyleSheet.create({
 	},
 
 	etiqueta: {
+		height: 2.2 * em,
+		margin: 0.6 * em,
+		padding: 0.1 * em,
+		borderRadius: 0.2 * em,
+		borderWidth: 0.2 * em,
+	},
+
+	etiquetaRemovida: {
 		height: 2 * em,
 		margin: 0.6 * em,
 		padding: 0.2 * em,
-		borderRadius: 0.2 * em,
+		borderRadius: 0.2 * em,		
 	},
 
 	botao: {
@@ -90,6 +102,10 @@ const styleComum = StyleSheet.create({
  */
  function mountPallete(cores){
 	return StyleSheet.create({
+		textoLeve: {
+			color: cores.corFonteSutil
+		},
+
 		texto: {
 			color: cores.corFontePrincipal,
 		},
@@ -118,6 +134,11 @@ const styleComum = StyleSheet.create({
 
 		etiqueta: {
 			backgroundColor: cores.fundoSecundarioHover,
+			borderColor: cores.fundoSecundario,
+		},
+
+		etiquetaRemovida: {
+			backgroundColor: cores.etiquetaSumiu,
 		},
 	
 		botao: {

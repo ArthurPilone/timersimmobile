@@ -8,6 +8,7 @@ import { Botao } from '../minor/Botao.js';
 import { ContextoTema } from '../../contextoTema';
 import { DuracaoPicker } from '../intermediate/DuracaoPicker.js';
 import { BotaoDesativavel } from '../minor/BotaoDesativavel.js';
+import { Etiqueta } from '../minor/Etiqueta.js';
 
 export { HomeScreen as HomeScreen }
 
@@ -27,6 +28,8 @@ function HomeScreen(props) {
 							props.criaTimer(tempoProva)
 							props.proxPagina()
 						}} />
+					<Etiqueta removida={true} h={1} m={30} />
+					<Etiqueta removida={false} h={1} m={30} />
 				</View>
 			)}
 		</ContextoTema.Consumer>
