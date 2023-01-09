@@ -6,6 +6,7 @@ import { ContextoTema } from '../../contextoTema';
 import { Botao } from '../minor/Botao';
 
 import { TimerDisplay } from '../intermediate/TimerDisplay';
+import { EtiquetasContainer } from '../intermediate/EtiquetasContainer';
 
 export { ProvaScreen as ProvaScreen }
 
@@ -17,8 +18,9 @@ function ProvaScreen(props){
 	let [provaM, setMValue] = React.useState(timer.getM())
 	let [provaH, setHValue] = React.useState(timer.getH())
 
+	let [nextTestTag, setNextTag] = React.useState(0)
 
-	timer.loadTimer(setSValue,setMValue,setHValue)
+	timer.loadTimer(setSValue,setMValue,setHValue,setNextTag)
 
 	return (
 		<ContextoTema.Consumer>
@@ -28,6 +30,7 @@ function ProvaScreen(props){
 					<Botao texto="Pausa" callback={props.timerProva.pause} args={[timer]}/>
 					<Botao texto="Despausa" callback={props.timerProva.unpause} args={[timer]}/>
 					<Botao texto="voltaaa" callback={props.a}></Botao>
+					<EtiquetasContainer tags={timer.tags} nextTag={nextTestTag}/>
 				</View>
 			)}
 		</ContextoTema.Consumer>

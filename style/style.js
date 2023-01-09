@@ -61,16 +61,19 @@ const styleComum = StyleSheet.create({
 
 	etiqueta: {
 		height: 2.2 * em,
+		width: 4.5 * em,
 		margin: 0.6 * em,
 		padding: 0.1 * em,
 		borderRadius: 0.2 * em,
 		borderWidth: 0.2 * em,
+		textAlign: 'center',
 	},
 
 	etiquetaRemovida: {
-		height: 2 * em,
+		height: 2.2 * em,
+		width: 4.5 * em,
 		margin: 0.6 * em,
-		padding: 0.2 * em,
+		padding: 0.3 * em,
 		borderRadius: 0.2 * em,		
 	},
 

@@ -6,7 +6,7 @@ export const Etiqueta = (props) => (
 	<ContextoTema.Consumer>
 		{({estilo, trocaTema}) => (
 			<View style={props.removida? estilo.etiquetaRemovida : estilo.etiqueta}>
-				<Text style={props.removida? estilo.textoLeve : estilo.texto}>{props.h}h {props.m}m</Text>
+				<Text style={[props.removida? estilo.textoLeve : estilo.texto, {textAlign: 'center'}]}>{props.h}h {props.m}m</Text>
 			</View>
 		)}
 	</ContextoTema.Consumer>

@@ -17,6 +17,7 @@ class Timer {
 		this.renderS = null;
 		this.renderM = null;
 		this.renderH = null;
+		this.renderNextTag = null;
 
 		this.loaded = false;
 
@@ -38,8 +39,6 @@ class Timer {
 			this.tags.push(testTime)
 		}
 		this.tags.push(0)
-
-		console.log("Etiquetas: " +  this.tags)
 	}
 
 	computeElapsedTime(){
@@ -82,8 +81,8 @@ class Timer {
 	checkTags(){
 		let nextTagMin = this.tags[this.nextTag]
 		if(nextTagMin >= (this.restanteMs / (60* 1000))){
-			console.log("Tirando a etiqueta: " + nextTagMin)
-			this.nextTag++
+			this.nextTag+=1
+			this.renderNextTag(this.nextTag)
 		}
 	}
 
@@ -117,12 +116,13 @@ class Timer {
 		
 	}
 
-	loadTimer(fs,fm,fh){
+	loadTimer(fs,fm,fh,fnt){
 		if(this.loaded)	return;
 		this.buildTags();
 		this.setSRenderCallback(fs)
 		this.setMRenderCallback(fm)
 		this.setHRenderCallback(fh)
+		this.setNextTagRenderCallback(fnt)
 		this.updateView()
 		this.loaded = true
 	}
@@ -137,6 +137,10 @@ class Timer {
 
 	setHRenderCallback(f){
 		this.renderH = f
+	}
+
+	setNextTagRenderCallback(f){
+		this.renderNextTag = f
 	}
 
 	getS() {
@@ -161,5 +165,6 @@ class Timer {
 		this.renderS = () => {}
 		this.renderM = () => {}
 		this.renderH = () => {}
+		this.renderNextTag = () => {}
 	}
 }
