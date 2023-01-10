@@ -29,7 +29,7 @@ export const EtiquetasContainer = (props) => {
 			)
 		}else{
 			groupedTags.push(
-				<View key={i} style={{flexDirection: 'row'}}>
+				<View key={i} style={{flexDirection: 'row', justifyContent: 'center'}}>
 					{renderedTags[i]}
 				</View>
 			)
