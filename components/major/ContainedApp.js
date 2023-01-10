@@ -15,6 +15,8 @@ function ContainedApp(props) {
 
 	let [timer, setTimer] = React.useState(new Timer(0))
 
+	let [testActive, setTestActive] =  React.useState(false)
+
 	let trocarPagina = (praFrente,scroller) => {
 		if(praFrente){
 			scroller.scrollTo({x: Dimensions.get('window').width, y: 0, animated: true})
@@ -27,10 +29,13 @@ function ContainedApp(props) {
 		<ScrollView ref={setRefScrollable} horizontal={true} pagingEnabled scrollEnabled={scrollable}>
             <HomeScreen 
 				criaTimer={ (duracao) => {timer.free();setScrollable(true);setTimer(new Timer(duracao))}}
+				testActive={ testActive }
 				proxPagina={ () => {trocarPagina(true,refScrollable)}}
 			/>
             <ProvaScreen 
-				timerProva={timer} 
+				timerProva={ timer } 
+				testActive={ testActive }
+				setTestActive={ setTestActive }
 				a={ () => {trocarPagina(false,refScrollable)}}/>
         </ScrollView>
 	);

@@ -18,6 +18,7 @@ class Timer {
 		this.renderM = null;
 		this.renderH = null;
 		this.renderNextTag = null;
+		this.notifyPaused = () => {};
 
 		this.loaded = false;
 
@@ -69,12 +70,14 @@ class Timer {
 		if(timer.pausado || timer.acabou){return}
 		timer.pausado = true;
 		timer.computeElapsedTime()
+		timer.notifyPaused(true)
 	}
 
 	unpause(timer){
 		if(!timer.pausado || timer.acabou){return}
 		timer.pausado = false;
 		timer.ultimoTick = Date.now()
+		timer.notifyPaused(false)
 		setTimeout(() => {timer.passo()},100)
 	}
 
@@ -116,7 +119,7 @@ class Timer {
 		
 	}
 
-	loadTimer(fs,fm,fh,fnt){
+	loadTimer(fs,fm,fh,fnt,fp){
 		if(this.loaded)	return;
 		this.buildTags();
 		this.setSRenderCallback(fs)
@@ -125,6 +128,7 @@ class Timer {
 		this.setNextTagRenderCallback(fnt)
 		this.renderNextTag(0)
 		this.updateView()
+		this.setNotifyPausedCallback(fp)
 		this.loaded = true
 	}
 
@@ -143,6 +147,11 @@ class Timer {
 	setNextTagRenderCallback(f){
 		this.renderNextTag = f
 	}
+
+	setNotifyPausedCallback(fp){
+		this.notifyPaused = fp
+	}
+	
 
 	getS() {
 		return this.restanteS
@@ -167,5 +176,6 @@ class Timer {
 		this.renderM = () => {}
 		this.renderH = () => {}
 		this.renderNextTag = () => {}
+		this.notifyPaused = () => {}
 	}
 }

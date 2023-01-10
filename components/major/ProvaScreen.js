@@ -7,6 +7,7 @@ import { Botao } from '../minor/Botao';
 
 import { TimerDisplay } from '../intermediate/TimerDisplay';
 import { EtiquetasContainer } from '../intermediate/EtiquetasContainer';
+import { TestController } from '../intermediate/TestController';
 
 export { ProvaScreen as ProvaScreen }
 
@@ -20,15 +21,20 @@ function ProvaScreen(props){
 
 	let [nextTestTag, setNextTag] = React.useState(0)
 
-	timer.loadTimer(setSValue,setMValue,setHValue,setNextTag)
+	let [paused, setPaused] = React.useState(false)
+
+	timer.loadTimer(setSValue,setMValue,setHValue,setNextTag,setPaused)
 
 	return (
 		<ContextoTema.Consumer>
 			{({estilo, trocaTema}) => (
 				<View style={[estilo.container, estilo.page]}>
 					<TimerDisplay hs={provaH} ms={provaM} s={provaS}/>
-					<Botao texto="Pausa" callback={props.timerProva.pause} args={[timer]}/>
-					<Botao texto="Despausa" callback={props.timerProva.unpause} args={[timer]}/>
+					<TestController 
+						testActive={props.testActive}
+						setTestActive={props.setTestActive} 
+						timer={timer}
+						paused={paused}/>
 					<Botao texto="voltaaa" callback={props.a}></Botao>
 					<EtiquetasContainer tags={timer.tags} nextTag={nextTestTag}/>
 				</View>
