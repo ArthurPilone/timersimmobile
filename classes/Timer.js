@@ -123,6 +123,7 @@ class Timer {
 		this.setMRenderCallback(fm)
 		this.setHRenderCallback(fh)
 		this.setNextTagRenderCallback(fnt)
+		this.renderNextTag(0)
 		this.updateView()
 		this.loaded = true
 	}
