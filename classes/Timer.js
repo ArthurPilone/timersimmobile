@@ -23,6 +23,7 @@ class Timer {
 		this.loaded = false;
 
 		this.nextTag = 0;
+		this.buildTags();
 	}
 
 	buildTags(){
@@ -121,7 +122,6 @@ class Timer {
 
 	loadTimer(fs,fm,fh,fnt,fp){
 		if(this.loaded)	return;
-		this.buildTags();
 		this.setSRenderCallback(fs)
 		this.setMRenderCallback(fm)
 		this.setHRenderCallback(fh)

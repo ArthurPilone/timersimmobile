@@ -11,20 +11,20 @@ export const TestController = (props) => {
 	<ContextoTema.Consumer>
 		{({estilo, trocaTema}) => (
 			<View style={{flexDirection: 'row'}}>
-				{(! props.testActive) && 
+				{((! props.testActive) && 
 					<Botao texto="Começar Prova" callback={ () =>{
 						props.setTestActive(true)
 						props.timer.unpause(props.timer)
 					}} />
-				}
-				{props.testActive && 
+				)||
+				(props.testActive && 
 					((! props.paused)  &&
 						<Botao texto="Pausar" key='p' callback={props.timer.pause} args={[props.timer]}/>
 					)||
 					( props.paused &&
 					<Botao texto="Retomar" key='unp' callback={props.timer.unpause} args={[props.timer]}/>
 					)
-				}
+				)}
 			</View>	
 		)}
 	</ContextoTema.Consumer>

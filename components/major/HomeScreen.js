@@ -24,6 +24,7 @@ function HomeScreen(props) {
 					<Botao texto='Trocar tema' callback={trocaTema} />
 					<BotaoDesativavel texto='Nova Prova' ativo={tempoProva!=0}
 						 callback={() => {
+							props.setTestActive(false)
 							props.criaTimer(tempoProva)
 							props.proxPagina()
 						}} />

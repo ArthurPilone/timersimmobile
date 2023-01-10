@@ -30,6 +30,7 @@ function ContainedApp(props) {
             <HomeScreen 
 				criaTimer={ (duracao) => {timer.free();setScrollable(true);setTimer(new Timer(duracao))}}
 				testActive={ testActive }
+				setTestActive={ setTestActive }
 				proxPagina={ () => {trocarPagina(true,refScrollable)}}
 			/>
             <ProvaScreen 
