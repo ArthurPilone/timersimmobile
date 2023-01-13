@@ -1,0 +1,4 @@
+TimerSim.png         -  Nossa Autoria - [MIT]
+TimerSimDark.png     -  Nossa Autoria - [MIT]
+settingsIcon.png     -  Nossa Autoria - [MIT]
+theme.png            -  Nossa Autoria - [MIT]

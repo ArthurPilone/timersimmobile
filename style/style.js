@@ -96,6 +96,23 @@ const styleComum = StyleSheet.create({
 		minHeight: 100*vh,
 	},
 
+	topLeft:{
+		position: 'absolute',
+		top: 3*em,
+		left: 0,
+	},
+
+	topRight:{
+		position: 'absolute',
+		top: 4*em,
+		right: 1*em,
+	},
+
+	iconSize:{
+		width: 3*em,
+		height: 3*em,
+	},	
+
   });
 
 /**

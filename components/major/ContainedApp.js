@@ -2,8 +2,12 @@ import * as React from 'react';
 
 import { Dimensions, ScrollView } from 'react-native';
 
+import { ContextoTema } from '../../contextoTema';
+
 import { HomeScreen } from "./HomeScreen"
 import { ProvaScreen } from "./ProvaScreen"
+
+import { IconeBotao } from "../minor/IconeBotao"
 
 import { Timer } from '../../classes/Timer';
 
@@ -26,19 +30,26 @@ function ContainedApp(props) {
 	}
 
 	return (
-		<ScrollView ref={setRefScrollable} horizontal={true} pagingEnabled scrollEnabled={scrollable}>
-            <HomeScreen 
-				criaTimer={ (duracao) => {timer.free();setScrollable(true);setTimer(new Timer(duracao))}}
-				testActive={ testActive }
-				setTestActive={ setTestActive }
-				proxPagina={ () => {trocarPagina(true,refScrollable)}}
-			/>
-            <ProvaScreen 
-				timerProva={ timer } 
-				testActive={ testActive }
-				setTestActive={ setTestActive }
-				a={ () => {trocarPagina(false,refScrollable)}}/>
-        </ScrollView>
+		<ContextoTema.Consumer>
+			{({estilo, trocaTema}) => (
+			<ScrollView ref={setRefScrollable} horizontal={true} pagingEnabled scrollEnabled={scrollable}>
+				<HomeScreen 
+					criaTimer={ (duracao) => {timer.free();setScrollable(true);setTimer(new Timer(duracao))}}
+					testActive={ testActive }
+					setTestActive={ setTestActive }
+					proxPagina={ () => {trocarPagina(true,refScrollable)}}
+				/>
+				<ProvaScreen 
+					timerProva={ timer } 
+					testActive={ testActive }
+					setTestActive={ setTestActive }
+					a={ () => {trocarPagina(false,refScrollable)}}/>
+				<IconeBotao 
+					estiloLayout={estilo.topLeft}
+					iconImage="theme" 
+					callback={trocaTema}/>
+			</ScrollView> )}
+		</ContextoTema.Consumer>
 	);
   }
 
