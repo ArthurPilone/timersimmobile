@@ -6,10 +6,14 @@ import { ContextoTema } from "./contextoTema.js"
 
 import { ContainedApp } from './components/major/ContainedApp.js';
 
+import { StorageManager } from './classes/StorageManager.js';
+
 export default function App() {
+    
+    let [storageManager, setStorage] = React.useState(null)
     let [estiloApp, settaTemaApp] = React.useState(lightStyle);
 
-    function trocaTemaAPP(){
+    let trocaTemaAPP = () => {
         if(estiloApp == lightStyle){
             settaTemaApp(darkStyle);
             return "d";
@@ -19,11 +23,24 @@ export default function App() {
         }
     }
 
+    React.useEffect( () => {
+
+        let sm = new StorageManager()
+
+        setStorage(sm)
+        let estiloInicial = sm.getSetting('theme')
+
+        estiloInicial = (estiloInicial == "l") ? lightStyle : darkStyle;
+
+        settaTemaApp(estiloInicial)
+        
+    },[])
+
     return (
         <ContextoTema.Provider value={{
             estilo: estiloApp,
             trocaTema: trocaTemaAPP}}>
-            <ContainedApp/>
+            <ContainedApp storageManager={storageManager}/>
         </ContextoTema.Provider>
     );
 }
