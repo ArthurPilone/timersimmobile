@@ -59,6 +59,9 @@ const styleComum = StyleSheet.create({
 		justifyContent: 'center',
 	},
 
+	switch: {
+	},
+
 	etiqueta: {
 		height: 2.2 * em,
 		width: 4.5 * em,
@@ -150,6 +153,14 @@ const styleComum = StyleSheet.create({
 		timerDisplay: {
 			borderColor: cores.borders,
 			backgroundColor: cores.fundoSecundarioHover,
+		},
+
+		switch: {
+			trackColor: {
+				false: cores.corFonteSutil, 
+				true: cores.borders},
+			thumbColor: cores.borders,
+			ios_backgroundColor: cores.fundoSecundario
 		},
 
 		etiqueta: {
