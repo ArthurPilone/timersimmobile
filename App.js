@@ -16,9 +16,11 @@ export default function App() {
     let trocaTemaAPP = () => {
         if(estiloApp == lightStyle){
             settaTemaApp(darkStyle);
+            storageManager.saveSetting('theme',"d")
             return "d";
         }else{
             settaTemaApp(lightStyle);
+            storageManager.saveSetting('theme',"l")
             return "l";
         }
     }
