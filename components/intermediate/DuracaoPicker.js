@@ -14,7 +14,7 @@ export const DuracaoPicker = (props) => {
 	return (
 	<ContextoTema.Consumer>
 		{({estilo, trocaTema}) => (
-			<View style={estilo.duracaoPicker} >
+			<View style={[estilo.card , estilo.duracaoPicker]} >
 				<Text style={estilo.subtitulo}>Tempo de Prova</Text>
 				<View style={estilo.rowFlex}>
 					<InputNumerico initialValue={horas} 

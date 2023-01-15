@@ -21,6 +21,26 @@ const styleComum = StyleSheet.create({
 		margin: 0.4 * em,
 	},
 
+	container: {
+		flex: 1,
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
+
+	rowFlex: {
+		flexDirection: 'row',
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
+
+	card: {
+		alignItems: 'center',
+		justifyContent: 'space-between',
+		borderWidth: 0.3*em,
+		borderRadius: 1 * em,
+		padding: 1 * em,
+	},
+
 	tempoProva: {
 		fontSize: 2.3*em,
 		margin: 0.5 * em,
@@ -30,33 +50,13 @@ const styleComum = StyleSheet.create({
 	duracaoPicker: {
 		height: 25 * vh,
 		width: 80 * vw,
-		alignItems: 'center',
-		justifyContent: 'space-between',
-		padding: 1 * em,
-		borderWidth: 0.3*em,
-		borderRadius: 1 * em,
+		
 	},
 
 	timerDisplay: {
 		height: 15 * vh,
 		width: 60 * vw,
-		alignItems: 'center',
-		justifyContent: 'space-between',
 		padding: 0.8 * em,
-		borderWidth: 0.3*em,
-		borderRadius: 1 * em,
-	},
-
-	container: {
-	  	flex: 1,
-	  	alignItems: 'center',
-	  	justifyContent: 'center',
-	},
-
-	rowFlex: {
-		flexDirection: 'row',
-		alignItems: 'center',
-		justifyContent: 'center',
 	},
 
 	switch: {
@@ -144,16 +144,12 @@ const styleComum = StyleSheet.create({
 		container: {
 			backgroundColor: cores.fundoPrimario,
 		},
-	
-		duracaoPicker: {
+
+		card: {
 			borderColor: cores.borders,
 			backgroundColor: cores.fundoSecundarioHover,
 		},
 
-		timerDisplay: {
-			borderColor: cores.borders,
-			backgroundColor: cores.fundoSecundarioHover,
-		},
 
 		switch: {
 			trackColor: {
