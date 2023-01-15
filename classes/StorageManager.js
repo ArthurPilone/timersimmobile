@@ -30,6 +30,7 @@ class StorageManager {
 	}
 
 	saveSetting(key,val){
+		this.state[key] = val
 		console.log("Salvando no disco: " + key + " = " + val)
 	}
 
