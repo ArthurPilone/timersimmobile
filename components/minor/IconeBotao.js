@@ -4,7 +4,8 @@ import { ContextoTema } from '../../contextoTema';
 
 const icons = {
 	settings: require("../../assets/settingsIcon.png"),
-	theme: require("../../assets/theme.png") 
+	theme: require("../../assets/theme.png"),
+	back: require("../../assets/backIcon.png")  
 }
 
 export const IconeBotao = (props) => (

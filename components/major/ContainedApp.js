@@ -58,14 +58,13 @@ function ContainedApp(props) {
 					timerProva={ timer } 
 					testActive={ testActive }
 					setTestActive={ setTestActive }
-					a={ () => {trocarPagina(false,refScrollable)}}/>
+					return={ () => {trocarPagina(false,refScrollable)}}/>
 				{settingsOverlayed || <IconeBotao 
 					estiloLayout={estilo.topLeft}
 					iconImage="settings" 
 					callback={() => {
 						toggleSettings(true);
 						setPreviouslyScrollable(scrollable);
-						console.log("Antigamnte scrolab?e " + previouslyScrollable)
 						setScrollable(false)}}/>}
 			</ScrollView> )}
 		</ContextoTema.Consumer>

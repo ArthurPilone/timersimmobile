@@ -21,7 +21,6 @@ function HomeScreen(props) {
 					<Logo/>
 					<Text style={estilo.subtitulo}>Bora fazer uma prova?</Text>
 					<DuracaoPicker atualizarTempo={setTempoProva}/>
-					<Botao texto='Trocar tema' callback={trocaTema} />
 					<BotaoDesativavel texto='Nova Prova' ativo={tempoProva!=0}
 						 callback={() => {
 							props.criaTimer(tempoProva)

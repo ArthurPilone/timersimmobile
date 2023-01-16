@@ -4,6 +4,7 @@ import { View } from 'react-native';
 
 import { ContextoTema } from '../../contextoTema';
 import { Botao } from '../minor/Botao';
+import { IconeBotao } from '../minor/IconeBotao';
 
 import { TimerDisplay } from '../intermediate/TimerDisplay';
 import { EtiquetasContainer } from '../intermediate/EtiquetasContainer';
@@ -35,8 +36,11 @@ function ProvaScreen(props){
 						setTestActive={props.setTestActive} 
 						timer={timer}
 						paused={paused}/>
-					<Botao texto="voltaaa" callback={props.a}></Botao>
 					<EtiquetasContainer tags={timer.tags} nextTag={nextTestTag}/>
+					<IconeBotao 
+						estiloLayout={estilo.topLeft}
+						iconImage="back" 
+						callback={props.return}/>
 				</View>
 			)}
 		</ContextoTema.Consumer>
