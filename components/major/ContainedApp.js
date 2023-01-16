@@ -10,16 +10,22 @@ import { ProvaScreen } from "./ProvaScreen"
 import { IconeBotao } from "../minor/IconeBotao"
 
 import { Timer } from '../../classes/Timer';
+import { SettingsOverlay } from './SettingsOverlay';
 
 export { ContainedApp as ContainedApp }
 
 function ContainedApp(props) {
 	let [scrollable, setScrollable] =  React.useState(false)
+	let [previouslyScrollable, setPreviouslyScrollable] =  React.useState(false)
 	let [refScrollable, setRefScrollable] = React.useState(null)
 
 	let [timer, setTimer] = React.useState(new Timer(0))
 
-	let [testActive, setTestActive] =  React.useState(false)
+	let [testActive, setTestActive] = React.useState(false)
+
+	let [settingsOverlayed, toggleSettings] = React.useState(false)
+
+	let storage = props.storageManager
 
 	let trocarPagina = (praFrente,scroller) => {
 		if(praFrente){
@@ -33,8 +39,17 @@ function ContainedApp(props) {
 		<ContextoTema.Consumer>
 			{({estilo, trocaTema}) => (
 			<ScrollView ref={setRefScrollable} horizontal={true} pagingEnabled scrollEnabled={scrollable}>
+				{settingsOverlayed && 
+					<SettingsOverlay 
+						style={estilo.topLeft} 
+						storage={storage} 
+						saveAndQuit={() => {toggleSettings(false);setScrollable(previouslyScrollable)} }/>}
 				<HomeScreen 
-					criaTimer={ (duracao) => {timer.free();setScrollable(true);setTimer(new Timer(duracao))}}
+					criaTimer={ (duracao) => {
+						timer.free();
+						setScrollable(true);
+						setTimer(new Timer(duracao))}
+					}
 					testActive={ testActive }
 					setTestActive={ setTestActive }
 					proxPagina={ () => {trocarPagina(true,refScrollable)}}
@@ -44,10 +59,14 @@ function ContainedApp(props) {
 					testActive={ testActive }
 					setTestActive={ setTestActive }
 					a={ () => {trocarPagina(false,refScrollable)}}/>
-				<IconeBotao 
+				{settingsOverlayed || <IconeBotao 
 					estiloLayout={estilo.topLeft}
-					iconImage="theme" 
-					callback={trocaTema}/>
+					iconImage="settings" 
+					callback={() => {
+						toggleSettings(true);
+						setPreviouslyScrollable(scrollable);
+						console.log("Antigamnte scrolab?e " + previouslyScrollable)
+						setScrollable(false)}}/>}
 			</ScrollView> )}
 		</ContextoTema.Consumer>
 	);

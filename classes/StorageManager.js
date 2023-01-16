@@ -18,6 +18,7 @@ class StorageManager {
 	loadSetting(key){
 		console.log("'Li' " + key + " do disco")
 		val = true
+		//this.state[key] = val
 		return val
 	}
 

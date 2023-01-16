@@ -13,14 +13,12 @@ export default function App() {
     let [storageManager, setStorage] = React.useState(null)
     let [estiloApp, settaTemaApp] = React.useState(lightStyle);
 
-    let trocaTemaAPP = () => {
-        if(estiloApp == lightStyle){
+    let trocaTemaAPP = (val) => {
+        if(val == 'd'){
             settaTemaApp(darkStyle);
-            storageManager.saveSetting('theme',"d")
             return "d";
         }else{
             settaTemaApp(lightStyle);
-            storageManager.saveSetting('theme',"l")
             return "l";
         }
     }

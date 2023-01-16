@@ -50,13 +50,26 @@ const styleComum = StyleSheet.create({
 	duracaoPicker: {
 		height: 25 * vh,
 		width: 80 * vw,
-		
 	},
 
 	timerDisplay: {
 		height: 15 * vh,
 		width: 60 * vw,
 		padding: 0.8 * em,
+	},
+
+	settingsOverlay: {
+		width: 70 * vw,
+	},
+
+	backOverlayed: {
+	},
+
+	optionsRow: {
+		width: '90%',
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		alignItems: 'center'
 	},
 
 	switch: {
@@ -150,6 +163,9 @@ const styleComum = StyleSheet.create({
 			backgroundColor: cores.fundoSecundarioHover,
 		},
 
+		backOverlayed: {
+			backgroundColor: cores.fundoSobreposto
+		},
 
 		switch: {
 			trackColor: {
