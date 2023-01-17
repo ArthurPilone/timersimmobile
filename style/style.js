@@ -114,14 +114,14 @@ const styleComum = StyleSheet.create({
 
 	topLeft:{
 		position: 'absolute',
-		top: 3*em,
-		left: -.5*em,
+		top: 1.5*em,
+		left: 1.5*em,
 	},
 
 	topRight:{
 		position: 'absolute',
-		top: 4*em,
-		right: 0,
+		top: 2*em,
+		right: 1.5*em,
 	},
 
 	iconSize:{
