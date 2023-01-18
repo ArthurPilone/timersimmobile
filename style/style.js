@@ -22,7 +22,6 @@ const styleComum = StyleSheet.create({
 	},
 
 	container: {
-		flex: 1,
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
@@ -114,17 +113,18 @@ const styleComum = StyleSheet.create({
 
 	topLeft:{
 		position: 'absolute',
-		top: 1.5*em,
+		top: 3*em,
 		left: 1.5*em,
 	},
 
 	topRight:{
 		position: 'absolute',
-		top: 2*em,
+		top: 3*em,
 		right: 1.5*em,
 	},
 
 	iconSize:{
+		resizeMode: 'contain',
 		width: 2.2*em,
 		height: 2.2*em,
 	},	

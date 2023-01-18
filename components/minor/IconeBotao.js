@@ -13,7 +13,12 @@ const icons = {
 export const IconeBotao = (props) => (
 	<ContextoTema.Consumer>
 		{({estilo, trocaTema}) => (
-			<Pressable style={[props.estiloLayout,estilo.iconSize]} onPressIn={() => {props.callback(...props.args)}}>
+			<Pressable 
+				style={[props.estiloLayout,estilo.iconSize,
+					{justifyContent:'center',
+					alignItems: 'center'}]
+					} 
+				onPressIn={() => {props.callback(...props.args)}}>
 				<Image source={icons[props.iconImage]} style={{width: '100%', resizeMode: 'contain' }}/>
 			</Pressable>
 		)}
