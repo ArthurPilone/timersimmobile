@@ -58,7 +58,7 @@ const styleComum = StyleSheet.create({
 	},
 
 	settingsOverlay: {
-		width: 70 * vw,
+		width: 80 * vw,
 	},
 
 	backOverlayed: {

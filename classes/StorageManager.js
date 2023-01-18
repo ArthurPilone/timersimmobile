@@ -11,7 +11,8 @@ class StorageManager {
 	loadSettings(){
 		console.log("'Li' tudo do disco")
 		return {
-			theme: "l"	
+			theme: "l",
+			timerHidden: "f"
 		}
 	}
 

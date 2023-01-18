@@ -41,9 +41,14 @@ function SettingsOverlay(props) {
 								} }/>
 						</View>
 						<View style={estilo.optionsRow}>
-							<Text style={estilo.texto}>
-								Fiscal Realista
-							</Text>
+						<View style={{width:"80%"}}>
+								<Text style={estilo.texto}>
+									Fiscal Realista
+								</Text>
+								<Text style={estilo.textoLeve}>
+									Pode se atrasar ao retirar uma etiqueta
+								</Text>
+							</View>
 							<BooleanInput 
 								val={realistic == 't'}
 								callback={
@@ -51,6 +56,24 @@ function SettingsOverlay(props) {
 									let option = v? 't' : 'f';
 									setRealistic(option)
 									optionsStorage.saveSetting('realistic',option)
+								} }/>
+						</View>
+						<View style={estilo.optionsRow}>
+							<View style={{width:"80%"}}>
+								<Text style={estilo.texto}>
+									Esconder Tempo de Prova
+								</Text>
+								<Text style={estilo.textoLeve}>
+									Você só terá as etiquetas para se orientar!
+								</Text>
+							</View>
+							<BooleanInput 
+								val={timerHidden == 't'}
+								callback={
+								(v) => {
+									let option = v? 't' : 'f';
+									setTimerHidden(option)
+									optionsStorage.saveSetting('timerHidden',option)
 								} }/>
 						</View>
 						<Botao texto="Salvar Mudanças" callback={props.saveAndQuit}/>

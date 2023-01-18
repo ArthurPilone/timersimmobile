@@ -1,20 +1,23 @@
 import * as React from 'react';
 
-import { View } from 'react-native';
+import { Text, View } from 'react-native';
 
 import { ContextoTema } from '../../contextoTema';
-import { Botao } from '../minor/Botao';
 import { IconeBotao } from '../minor/IconeBotao';
 
 import { TimerDisplay } from '../intermediate/TimerDisplay';
 import { EtiquetasContainer } from '../intermediate/EtiquetasContainer';
 import { TestController } from '../intermediate/TestController';
+import Pressable from 'react-native/Libraries/Components/Pressable/Pressable';
 
 export { ProvaScreen as ProvaScreen }
 
 function ProvaScreen(props){
 
+	if(props.storage == null){return}
+
 	let timer = props.timerProva
+	let timerAvaliable = (props.storage.getSetting("timerHidden") == 'f')
 
 	let [provaS, setSValue] = React.useState(timer.getS())
 	let [provaM, setMValue] = React.useState(timer.getM())
@@ -24,13 +27,43 @@ function ProvaScreen(props){
 
 	let [paused, setPaused] = React.useState(false)
 
+	let [timerVisible, setTimerVisible] = React.useState(timerAvaliable)
+
 	timer.loadTimer(setSValue,setMValue,setHValue,setNextTag,setPaused)
 
 	return (
 		<ContextoTema.Consumer>
 			{({estilo, trocaTema}) => (
 				<View style={[estilo.container, estilo.page]}>
-					<TimerDisplay hs={provaH} ms={provaM} s={provaS}/>
+					{timerAvaliable &&
+					<View style={[estilo.container,{width: "60%"}]} >
+						<Pressable 
+							style={{
+								flexDirection: 'row',
+								justifyContent: 'space-around',
+								alignItems: 'center',
+								width: "90%"
+							}}
+							onPressIn={
+								() => {
+									setTimerVisible(!timerVisible)
+								}
+							}
+							>
+							<IconeBotao 
+								iconImage={timerVisible? "invisible" : "visible" } 
+								callback={() => {}}/>
+							<Text>
+								{timerVisible? "Esconder Tempo de Prova" : "Revelar Tempo de Prova"}
+							</Text>
+						</Pressable>
+						
+						{timerVisible &&
+							<TimerDisplay hs={provaH} ms={provaM} s={provaS}/>}
+						{! timerVisible &&
+							<View style={[estilo.timerDisplay,{opacity: 0}]}></View>
+						}
+					</View>}
 					<TestController 
 						testActive={props.testActive}
 						setTestActive={props.setTestActive} 
