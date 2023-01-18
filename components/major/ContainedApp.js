@@ -58,7 +58,8 @@ function ContainedApp(props) {
 					timerProva={ timer } 
 					testActive={ testActive }
 					setTestActive={ setTestActive }
-					storage={ storage }
+					timerAvaliable={ 
+						storage ? (storage.getSetting("timerHidden") == 'f') : 'f' }
 					return={ () => {trocarPagina(false,refScrollable)}}/>
 				{settingsOverlayed || <IconeBotao 
 					estiloLayout={estilo.topLeft}

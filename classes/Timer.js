@@ -44,7 +44,7 @@ class Timer {
 	}
 
 	computeElapsedTime(){
-		agora = Date.now()
+		let agora = Date.now()
 		elapsed = agora - this.ultimoTick
 		this.restanteMs -= elapsed
 		this.ultimoTick = agora
@@ -120,7 +120,7 @@ class Timer {
 		
 	}
 
-	loadTimer(fs,fm,fh,fnt,fp){
+	loadTimer(fs,fm,fh,fnt,fp,fCallback){
 		if(this.loaded)	return;
 		this.setSRenderCallback(fs)
 		this.setMRenderCallback(fm)
@@ -129,6 +129,7 @@ class Timer {
 		this.renderNextTag(0)
 		this.updateView()
 		this.setNotifyPausedCallback(fp)
+		fCallback()
 		this.loaded = true
 	}
 

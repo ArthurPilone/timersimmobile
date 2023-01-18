@@ -14,10 +14,8 @@ export { ProvaScreen as ProvaScreen }
 
 function ProvaScreen(props){
 
-	if(props.storage == null){return}
-
 	let timer = props.timerProva
-	let timerAvaliable = (props.storage.getSetting("timerHidden") == 'f')
+	let timerAvaliable = props.timerAvaliable
 
 	let [provaS, setSValue] = React.useState(timer.getS())
 	let [provaM, setMValue] = React.useState(timer.getM())
@@ -27,9 +25,10 @@ function ProvaScreen(props){
 
 	let [paused, setPaused] = React.useState(false)
 
-	let [timerVisible, setTimerVisible] = React.useState(timerAvaliable)
-
-	timer.loadTimer(setSValue,setMValue,setHValue,setNextTag,setPaused)
+	let [timerVisible, setTimerVisible] = React.useState(true)
+	
+	timer.loadTimer(setSValue,setMValue,setHValue,setNextTag,setPaused, 
+		() => {setTimerVisible(true)})
 
 	return (
 		<ContextoTema.Consumer>
