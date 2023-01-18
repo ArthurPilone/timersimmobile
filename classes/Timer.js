@@ -1,8 +1,10 @@
 export {Timer as Timer}
 
+import { ExtraMath } from "./ExtraMath" 
+
 class Timer {
 
-	constructor(duracaoMin){
+	constructor(duracaoMin, realistic){
 		this.duracaoMs = duracaoMin*60*1000
 		this.duracaoMin = duracaoMin
 		this.restanteMs = this.duracaoMs
@@ -23,7 +25,8 @@ class Timer {
 		this.loaded = false;
 
 		this.nextTag = 0;
-		this.buildTags();
+		this.buildTags()
+		this.buildTagRemotionMarkers(realistic);
 	}
 
 	buildTags(){
@@ -41,6 +44,28 @@ class Timer {
 			this.tags.push(testTime)
 		}
 		this.tags.push(0)
+	}
+
+	buildTagRemotionMarkers(realistic){
+		
+		if(!realistic){
+			this.tagRemotion = this.tags
+			return
+		}
+
+		this.tagRemotion = this.tags.map(this.randomizeTagMarker)
+	}
+
+	randomizeTagMarker(tagTime, tagIndex,tags){
+		if(tagIndex == 0 || (tagIndex >= tags.length - 2)){
+			return tagTime
+		}
+
+		let offset = ExtraMath.gaussianRandom(0,1.2)
+		offset = Math.round(offset)
+		offset = ExtraMath.clamp(offset,-14,5)
+
+		return tagTime += offset
 	}
 
 	computeElapsedTime(){

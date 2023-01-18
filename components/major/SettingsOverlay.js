@@ -43,10 +43,10 @@ function SettingsOverlay(props) {
 						<View style={estilo.optionsRow}>
 						<View style={{width:"80%"}}>
 								<Text style={estilo.texto}>
-									Fiscal Realista
+									Fiscal Impreciso
 								</Text>
 								<Text style={estilo.textoLeve}>
-									Pode se atrasar ao retirar uma etiqueta
+									Pode se atrasar ou adiantar ao retirar uma etiqueta
 								</Text>
 							</View>
 							<BooleanInput 

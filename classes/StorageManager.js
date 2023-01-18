@@ -12,7 +12,8 @@ class StorageManager {
 		console.log("'Li' tudo do disco")
 		return {
 			theme: "l",
-			timerHidden: "f"
+			timerHidden: "f",
+			realistic: "f"
 		}
 	}
 

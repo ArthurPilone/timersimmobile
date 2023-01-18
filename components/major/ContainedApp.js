@@ -48,7 +48,7 @@ function ContainedApp(props) {
 					criaTimer={ (duracao) => {
 						timer.free();
 						setScrollable(true);
-						setTimer(new Timer(duracao))}
+						setTimer(new Timer(duracao,storage.getSetting('realistic') == 't'))}
 					}
 					testActive={ testActive }
 					setTestActive={ setTestActive }
