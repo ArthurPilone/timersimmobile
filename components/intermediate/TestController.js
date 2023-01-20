@@ -1,32 +1,57 @@
 import * as React from 'react';
 
-import { View } from 'react-native';
-
-import { ContextoTema } from '../../contextoTema';
+import { Animated } from 'react-native';
 
 import { Botao } from '../minor/Botao';
 
+const animationDuration = 300
+
 export const TestController = (props) => {
+	const opacAnim = React.useRef(new Animated.Value(1)).current;
+
+	const blink = () => {
+		Animated.sequence([
+			Animated.timing(opacAnim, {
+				toValue: 0,
+				duration: animationDuration/2,
+				useNativeDriver: true,
+			})
+			,
+			Animated.timing(opacAnim, {
+				toValue: 1,
+				duration: animationDuration/2,
+				useNativeDriver: true,
+			})
+		]).start();
+	};
+
 	return (
-	<ContextoTema.Consumer>
-		{({estilo, trocaTema}) => (
-			<View style={{flexDirection: 'row'}}>
-				{((! props.testActive) && 
-					<Botao texto="Começar Prova" callback={ () =>{
+		<Animated.View style={{opacity: opacAnim, flexDirection: 'row'}}>
+			{((! props.testActive) && 
+				<Botao texto="Começar Prova" callback={ () =>{
+					blink()
+					setTimeout(() => {
 						props.setTestActive(true)
 						props.timer.unpause(props.timer)
+						},animationDuration/2)
+				}} />
+			)||
+			(props.testActive && 
+				((! props.paused)  &&
+					<Botao texto="Pausar" key='p' args={[props.timer]} 
+					callback={(timer) => {
+						setTimeout(() => {timer.pause(timer)}, animationDuration/2)
+						blink()
 					}} />
 				)||
-				(props.testActive && 
-					((! props.paused)  &&
-						<Botao texto="Pausar" key='p' callback={props.timer.pause} args={[props.timer]}/>
-					)||
-					( props.paused &&
-					<Botao texto="Retomar" key='unp' callback={props.timer.unpause} args={[props.timer]}/>
-					)
-				)}
-			</View>	
-		)}
-	</ContextoTema.Consumer>
+				( props.paused &&
+				<Botao texto="Retomar" key='unp' args={[props.timer]} 
+				callback={(timer) => {
+					setTimeout(() => {timer.unpause(timer)}, animationDuration/2)
+					blink()
+				}} />
+				)
+			)}
+		</Animated.View>
 	)
 }  
