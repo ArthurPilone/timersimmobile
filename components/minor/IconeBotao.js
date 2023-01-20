@@ -6,8 +6,6 @@ const icons = {
 	settings: require("../../assets/settingsIcon.png"),
 	theme: require("../../assets/theme.png"),
 	back: require("../../assets/backIcon.png"),
-	visible: require("../../assets/visible.png"), 
-	invisible: require("../../assets/invisible.png"),  
 }
 
 export const IconeBotao = (props) => (

@@ -22,7 +22,8 @@ class Timer {
 		this.renderNextTag = null;
 		this.notifyPaused = () => {};
 
-		this.loaded = false;
+		this.notifiersLoaded = false;
+		this.renderersLoaded = false;
 
 		this.nextTag = 0;
 		this.buildTags()
@@ -145,17 +146,24 @@ class Timer {
 		
 	}
 
-	loadTimer(fs,fm,fh,fnt,fp,fCallback){
-		if(this.loaded)	return;
+	loadNotifiers(fnt,fps){
+		if(this.notifiersLoaded) return;
+
+		this.setNotifyPausedCallback(fps)
+		this.setNextTagRenderCallback(fnt)
+		this.renderNextTag(0)
+
+		this.notifiersLoaded = true
+	}
+
+	loadTimerRenderers(fs,fm,fh,fCallback){
+		if(this.renderersLoaded)	return;
 		this.setSRenderCallback(fs)
 		this.setMRenderCallback(fm)
 		this.setHRenderCallback(fh)
-		this.setNextTagRenderCallback(fnt)
-		this.renderNextTag(0)
 		this.updateView()
-		this.setNotifyPausedCallback(fp)
 		fCallback()
-		this.loaded = true
+		this.renderersLoaded = true
 	}
 
 	setSRenderCallback(f){
@@ -175,10 +183,9 @@ class Timer {
 	}
 
 	setNotifyPausedCallback(fp){
-		this.notifyPaused = fp
+		this.notifyPaused = fp		
 	}
 	
-
 	getS() {
 		return this.restanteS
 	}
