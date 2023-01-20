@@ -28,34 +28,6 @@ function ProvaScreen(props){
 				<View style={[estilo.container, estilo.page]}>
 					{timerAvaliable &&
 						<WrappedTimer timer={timer}/>
-					// <View style={[estilo.container,{width: "60%"}]} >
-					// 	<Pressable 
-					// 		style={{
-					// 			flexDirection: 'row',
-					// 			justifyContent: 'space-around',
-					// 			alignItems: 'center',
-					// 			width: "90%"
-					// 		}}
-					// 		onPressIn={
-					// 			() => {
-					// 				setTimerVisible(!timerVisible)
-					// 			}
-					// 		}
-					// 		>
-					// 		<IconeBotao 
-					// 			iconImage={timerVisible? "invisible" : "visible" } 
-					// 			callback={() => {}}/>
-					// 		<Text>
-					// 			{timerVisible? "Esconder Tempo de Prova" : "Revelar Tempo de Prova"}
-					// 		</Text>
-					// 	</Pressable>
-						
-					// 	{timerVisible &&
-					// 		<TimerDisplay hs={provaH} ms={provaM} s={provaS}/>}
-					// 	{! timerVisible &&
-					// 		<View style={[estilo.timerDisplay,{opacity: 0}]}></View>
-					// 	}
-					// </View>
 					}
 					<TestController 
 						testActive={props.testActive}

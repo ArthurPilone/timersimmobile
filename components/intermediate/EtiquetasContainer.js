@@ -4,9 +4,6 @@ import { View } from 'react-native';
 
 import { Etiqueta } from '../minor/Etiqueta';
 
-import { ContextoTema } from '../../contextoTema';
-
-
 export const EtiquetasContainer = (props) => {
 
 	let tags = props.tags
@@ -37,14 +34,8 @@ export const EtiquetasContainer = (props) => {
 	}
 
 	return (
-	<ContextoTema.Consumer>
-		{({estilo, trocaTema}) => {
-			return (
-				<View>
-					{groupedTags}
-				</View>
-			)
-		}}
-	</ContextoTema.Consumer>
+		<View>
+			{groupedTags}
+		</View>
 	)
 }  
