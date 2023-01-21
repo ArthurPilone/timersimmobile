@@ -140,9 +140,7 @@ class Timer {
 			}
 
 			this.renderH(this.restanteH)
-		} catch (error) {
-			console.log("Não foi possível atualizar display do timer: " + error)
-		}
+		} catch (error) {}
 		
 	}
 
