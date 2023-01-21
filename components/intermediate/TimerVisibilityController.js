@@ -6,7 +6,9 @@ import { ContextoTema } from '../../contextoTema';
 
 const VisibilityIcons = {
 	visible: require("../../assets/visible.png"), 
-	invisible: require("../../assets/invisible.png"),  
+	visibleDark: require("../../assets/visibleDark.png"), 
+	invisible: require("../../assets/invisible.png"), 
+	invisibleDark: require("../../assets/invisibleDark.png"),  
 }
 
 export const TimerVisibilityController = (props) => {
@@ -23,7 +25,11 @@ export const TimerVisibilityController = (props) => {
 				onPressIn={props.toggleVisibility}>
 				<Image
 					style={estilo.iconSize} 
-					source={VisibilityIcons[props.timerVisible? "invisible" : "visible"]}
+					source={VisibilityIcons[
+						estilo.subtitulo['color'] == "#fff" ? 
+							(props.timerVisible? "invisibleDark" : "visibleDark") :
+							(props.timerVisible? "invisible" : "visible")
+						]}
 					/>
 				<Text style={estilo.texto}>
 					{props.timerVisible? "Esconder Tempo de Prova" : "Revelar Tempo de Prova"}

@@ -4,8 +4,12 @@ import { ContextoTema } from '../../contextoTema';
 
 const icons = {
 	settings: require("../../assets/settingsIcon.png"),
-	theme: require("../../assets/theme.png"),
 	back: require("../../assets/backIcon.png"),
+}
+
+const darkIcons = {
+	settings: require("../../assets/settingsIconDark.png"),
+	back: require("../../assets/backIconDark.png"),
 }
 
 export const IconeBotao = (props) => (
@@ -17,7 +21,12 @@ export const IconeBotao = (props) => (
 					alignItems: 'center'}]
 					} 
 				onPressIn={() => {props.callback(...props.args)}}>
-				<Image source={icons[props.iconImage]} style={{width: '100%', resizeMode: 'contain' }}/>
+				<Image 
+					source={
+						estilo.subtitulo['color'] == "#fff" ? 
+						darkIcons[props.iconImage] : 
+						icons[props.iconImage]}    
+					style={{width: '100%', resizeMode: 'contain' }}/>
 			</Pressable>
 		)}
 	</ContextoTema.Consumer>
