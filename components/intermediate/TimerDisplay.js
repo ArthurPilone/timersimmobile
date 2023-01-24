@@ -6,7 +6,7 @@ import { Text,View } from 'react-native';
 
 export const TimerDisplay = (props) => {
 
-	let testEnded = (props.s =='00') && (props.ms == '00') && (props.hs == 0)
+	let testEnded = props.testEnded
 
 	return (
 	<ContextoTema.Consumer>

@@ -21,6 +21,7 @@ class Timer {
 		this.renderH = null;
 		this.renderNextTag = null;
 		this.notifyPaused = () => {};
+		this.notifyTestEnded = () => {};
 
 		this.notifiersLoaded = false;
 		this.renderersLoaded = false;
@@ -122,6 +123,7 @@ class Timer {
 			this.pausado = true
 			this.restanteMs = 0
 			this.updateRestantesFromMs()
+			this.notifyTestEnded()
 		}
 	}
 
@@ -144,12 +146,13 @@ class Timer {
 		
 	}
 
-	loadNotifiers(fnt,fps){
+	loadNotifiers(fnt,fps,fte){
 		if(this.notifiersLoaded) return;
 
 		this.setNotifyPausedCallback(fps)
 		this.setNextTagRenderCallback(fnt)
 		this.renderNextTag(0)
+		this.setTestEndedCallback(fte)
 
 		this.notifiersLoaded = true
 	}
@@ -184,6 +187,10 @@ class Timer {
 		this.notifyPaused = fp		
 	}
 	
+	setTestEndedCallback(fte){
+		this.notifyTestEnded = fte
+	}
+
 	getS() {
 		return this.restanteS
 	}

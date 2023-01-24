@@ -26,7 +26,8 @@ export const TestController = (props) => {
 	};
 
 	return (
-		<Animated.View style={{opacity: opacAnim, flexDirection: 'row'}}>
+		<Animated.View 
+			style={{opacity: Animated.multiply(opacAnim, props.testEnded ? 0 : 1), flexDirection: 'row'}}>
 			{((! props.testActive) && 
 				<Botao texto="Começar Prova" callback={ () =>{
 					blink()

@@ -51,7 +51,9 @@ export const WrappedTimer = (props) => {
 						setTimeout(() => {setTimerVisible(!timerVisible)},(animationDuration/2))
 						blink()}}/>
 					{timerVisible &&
-						<TimerDisplay hs={provaH} ms={provaM} s={provaS}/>}
+						<TimerDisplay 
+							testEnded={props.testEnded}
+							hs={provaH} ms={provaM} s={provaS}/>}
 					{! timerVisible &&
 						<View style={[estilo.timerDisplay,{opacity: 0}]}></View>
 					}

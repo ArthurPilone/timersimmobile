@@ -20,20 +20,23 @@ function ProvaScreen(props){
 
 	let [paused, setPaused] = React.useState(false)
 
-	timer.loadNotifiers(setNextTag,setPaused)
+	let [testEnded, setTestEnd] = React.useState(false)
+
+	timer.loadNotifiers(setNextTag,setPaused,() => {setTestEnd(true)})
 
 	return (
 		<ContextoTema.Consumer>
 			{({estilo, trocaTema}) => (
 				<View style={[estilo.container, estilo.page]}>
 					{timerAvaliable &&
-						<WrappedTimer timer={timer}/>
+						<WrappedTimer timer={timer} testEnded={testEnded}/>
 					}
 					<TestController 
 						testActive={props.testActive}
 						setTestActive={props.setTestActive} 
 						timer={timer}
-						paused={paused}/>
+						paused={paused}
+						testEnded={testEnded}/>
 					<EtiquetasContainer tags={timer.tags} nextTag={nextTestTag}/>
 					<IconeBotao 
 						estiloLayout={estilo.topLeft}
