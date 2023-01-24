@@ -8,17 +8,22 @@ import { ContainedApp } from './components/major/ContainedApp.js';
 
 import { StorageManager } from './classes/StorageManager.js';
 
+import { StatusBar } from 'react-native';
+
 export default function App() {
     
     let [storageManager, setStorage] = React.useState(null)
     let [estiloApp, settaTemaApp] = React.useState(lightStyle);
+    let [conteudoBarra, setConteudoBarra] = React.useState('dark-content'); 
 
     let trocaTemaAPP = (val) => {
         if(val == 'd'){
             settaTemaApp(darkStyle);
+            setConteudoBarra('light-content');
             return "d";
         }else{
             settaTemaApp(lightStyle);
+            setConteudoBarra('dark-content');
             return "l";
         }
     }
@@ -41,6 +46,7 @@ export default function App() {
             estilo: estiloApp,
             trocaTema: trocaTemaAPP}}>
             <ContainedApp storageManager={storageManager}/>
+            <StatusBar backgroundColor={estiloApp.card.backgroundColor} barStyle={conteudoBarra}/>
         </ContextoTema.Provider>
     );
 }
