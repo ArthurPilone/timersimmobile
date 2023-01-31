@@ -45,10 +45,11 @@ function ContainedApp(props) {
 						storage={storage} 
 						saveAndQuit={() => {toggleSettings(false);setScrollable(previouslyScrollable)} }/>}
 				<HomeScreen 
-					criaTimer={ (duracao) => {
+					criaTimer={async (duracao) => {
 						timer.free();
 						setScrollable(true);
-						setTimer(new Timer(duracao,storage.getSetting('realistic') == 't'))}
+						let realista = await(storage.getSetting('realistic')) == 't'
+						setTimer(new Timer(duracao,realista))}
 					}
 					testActive={ testActive }
 					setTestActive={ setTestActive }
@@ -58,8 +59,8 @@ function ContainedApp(props) {
 					timerProva={ timer } 
 					testActive={ testActive }
 					setTestActive={ setTestActive }
-					timerAvaliable={ 
-						storage ? (storage.getSetting("timerHidden") == 'f') : 'f' }
+					timerHidden={ 
+						storage ? storage.getSetting("timerHidden") : 'f' }
 					return={ () => {trocarPagina(false,refScrollable)}}/>
 				{settingsOverlayed || <IconeBotao 
 					estiloLayout={estilo.topLeft}

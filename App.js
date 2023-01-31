@@ -28,17 +28,24 @@ export default function App() {
         }
     }
 
-    React.useEffect( () => {
+    React.useEffect(() => {
+
+        async function getInitialStyle (sm) {
+
+            await sm.loadSettings()
+
+            let estiloInicial = await sm.getSetting('theme')
+
+            estiloInicial = (estiloInicial == "l") ? lightStyle : darkStyle;
+    
+            settaTemaApp(estiloInicial)
+        }
 
         let sm = new StorageManager()
 
+        getInitialStyle(sm)
+
         setStorage(sm)
-        let estiloInicial = sm.getSetting('theme')
-
-        estiloInicial = (estiloInicial == "l") ? lightStyle : darkStyle;
-
-        settaTemaApp(estiloInicial)
-        
     },[])
 
     return (

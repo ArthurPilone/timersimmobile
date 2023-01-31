@@ -6,6 +6,8 @@ import { ContextoTema } from '../../contextoTema';
 import { BooleanInput } from '../minor/BooleanInput.js';
 import { Botao } from '../minor/Botao';
 
+import { defaultSettings } from '../../classes/StorageManager';
+
 export { SettingsOverlay as SettingsOverlay }
 
 function SettingsOverlay(props) {
@@ -14,11 +16,17 @@ function SettingsOverlay(props) {
 
 	let optionsStorage = props.storage
 
-	let [theme, setTheme] =  React.useState(optionsStorage.getSetting('theme'))
-	let [realistic, setRealistic] =  React.useState(optionsStorage.getSetting('realistic'))
-	let [timerHidden, setTimerHidden] =  React.useState(optionsStorage.getSetting('timerHidden'))
-	let [sounds, setSounds] =  React.useState(optionsStorage.getSetting('sounds'))
-	let [pushNotif, setPushNotif] =  React.useState(optionsStorage.getSetting('pushNotif'))
+	let [theme, setTheme] =  React.useState(defaultSettings[0])
+	let [realistic, setRealistic] =  React.useState(defaultSettings[1])
+	let [timerHidden, setTimerHidden] =  React.useState(defaultSettings[2])
+	//let [sounds, setSounds] =  React.useState( await optionsStorage.getSetting('sounds'))
+	//let [pushNotif, setPushNotif] =  React.useState( await optionsStorage.getSetting('pushNotif'))
+
+	React.useEffect(() => {
+		optionsStorage.getSetting('theme').then((v) => {setTheme(v)})
+		optionsStorage.getSetting('realistic').then((v) => {setRealistic(v)})
+		optionsStorage.getSetting('timerHidden').then((v) => {setTimerHidden(v)})
+    },[])
 
 	return (
 		<ContextoTema.Consumer>

@@ -1,32 +1,43 @@
-export {StorageManager as StorageManager}
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-// Usar https://react-native-async-storage.github.io/async-storage/docs ?
+export {StorageManager as StorageManager, defaultSettings}
+
+const settings = ['theme', 'timerHidden', 'realistic']
+const defaultSettings = ['l','f','f']
 
 class StorageManager {
 
 	constructor(){
-		this.state = this.loadSettings()
+		this.state = {};
 	}
 
-	loadSettings(){
-		console.log("'Li' tudo do disco")
-		return {
-			theme: "l",
-			timerHidden: "f",
-			realistic: "f"
+	async loadSettings(){
+		for(i = 0; i < settings.length; i+= 1){
+			let key = settings[i];
+			try {
+				(AsyncStorage.getItem(key)).then((val) => {this.state[key] = val})
+			} catch (e) {
+				console.log("Erro lendo settings: " + e)
+				this.state[key] = defaultSettings[i]
+			}
 		}
+
 	}
 
-	loadSetting(key){
-		console.log("'Li' " + key + " do disco")
-		val = true
-		//this.state[key] = val
+	async loadSetting(key){
+		try{
+			val = await AsyncStorage.getItem(key)
+			this.state[key] = val
+		}catch(e){
+			console.log("Erro carregando setting individual: " + e)
+			val = null;
+		}
 		return val
 	}
 
-	getSetting(key){
+	async getSetting(key){
 		if(this.state[key] == undefined){
-			return this.loadSetting(key)
+			return await this.loadSetting(key)
 		}else{
 			return this.state[key]
 		}
@@ -34,7 +45,11 @@ class StorageManager {
 
 	saveSetting(key,val){
 		this.state[key] = val
-		console.log("Salvando no disco: " + key + " = " + val)
+		try{
+			AsyncStorage.setItem(key, val)
+		}catch(e){
+			console.log("Erro salvando opcao no disco: " + e)
+		}
 	}
 
 }

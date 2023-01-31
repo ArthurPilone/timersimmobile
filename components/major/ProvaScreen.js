@@ -14,7 +14,10 @@ export { ProvaScreen as ProvaScreen }
 function ProvaScreen(props){
 
 	let timer = props.timerProva
-	let timerAvaliable = props.timerAvaliable
+
+	let [timerAvaliable, settimerAvaliable] = React.useState(false)
+
+	Promise.resolve(props.timerHidden).then((v) => {settimerAvaliable(v == 'f')})
 
 	let [nextTestTag, setNextTag] = React.useState(0)
 
