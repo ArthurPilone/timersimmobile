@@ -26,6 +26,9 @@ function ProvaScreen(props){
 	let [testEnded, setTestEnd] = React.useState(false)
 
 	timer.loadNotifiers(setNextTag,setPaused,() => {setTestEnd(true)})
+	timer.loadSoundCallbacks(
+		() => {props.soundManager.playSound('desgrudar')},
+		() => {props.soundManager.playSound('sirene')})
 
 	return (
 		<ContextoTema.Consumer>

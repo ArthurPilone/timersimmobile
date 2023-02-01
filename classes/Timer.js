@@ -15,6 +15,7 @@ class Timer {
 		this.pausado = true;
 		this.acabou = false;
 		this.ultimoTick = Date.now();
+		this.wasJustAway = false;
 
 		this.renderS = null;
 		this.renderM = null;
@@ -23,8 +24,12 @@ class Timer {
 		this.notifyPaused = () => {};
 		this.notifyTestEnded = () => {};
 
+		this.nextTagSoundCallback = () => {};
+		this.testEndSoundCallback = () => {};
+
 		this.notifiersLoaded = false;
 		this.renderersLoaded = false;
+		this.soundsCallbacksLoaded = false;
 
 		this.nextTag = 0;
 		this.buildTags()
@@ -73,6 +78,7 @@ class Timer {
 	computeElapsedTime(){
 		let agora = Date.now()
 		elapsed = agora - this.ultimoTick
+		this.wasJustAway = elapsed > 300
 		this.restanteMs -= elapsed
 		this.ultimoTick = agora
 		this.updateRestantesFromMs()
@@ -114,6 +120,9 @@ class Timer {
 		if(nextTagMin >= (this.restanteMs / (60* 1000))){
 			this.nextTag+=1
 			this.renderNextTag(this.nextTag)
+			if(! this.wasJustAway){
+				this.nextTagSoundCallback()
+			}		
 		}
 	}
 
@@ -124,6 +133,7 @@ class Timer {
 			this.restanteMs = 0
 			this.updateRestantesFromMs()
 			this.notifyTestEnded()
+			this.testEndSoundCallback()
 		}
 	}
 
@@ -155,6 +165,13 @@ class Timer {
 		this.setTestEndedCallback(fte)
 
 		this.notifiersLoaded = true
+	}
+
+	loadSoundCallbacks(fNt, fTe){
+		if(this.soundsCallbacksLoaded) return;
+
+		this.nextTagSoundCallback = fNt;
+		this.testEndSoundCallback = fTe;
 	}
 
 	loadTimerRenderers(fs,fm,fh,fCallback){

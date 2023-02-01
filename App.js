@@ -7,12 +7,14 @@ import { ContextoTema } from "./contextoTema.js"
 import { ContainedApp } from './components/major/ContainedApp.js';
 
 import { StorageManager } from './classes/StorageManager.js';
+import { SoundManager } from './classes/SoundManager.js';
 
 import { StatusBar } from 'react-native';
 
 export default function App() {
     
     let [storageManager, setStorage] = React.useState(null)
+    let [soundManager, setSoundManager] = React.useState(new SoundManager())
     let [estiloApp, settaTemaApp] = React.useState(lightStyle);
     let [conteudoBarra, setConteudoBarra] = React.useState('dark-content'); 
 
@@ -52,7 +54,7 @@ export default function App() {
         <ContextoTema.Provider value={{
             estilo: estiloApp,
             trocaTema: trocaTemaAPP}}>
-            <ContainedApp storageManager={storageManager}/>
+            <ContainedApp storageManager={storageManager} soundManager={soundManager}/>
             <StatusBar backgroundColor={estiloApp.card.backgroundColor} barStyle={conteudoBarra}/>
         </ContextoTema.Provider>
     );

@@ -59,6 +59,7 @@ function ContainedApp(props) {
 					timerProva={ timer } 
 					testActive={ testActive }
 					setTestActive={ setTestActive }
+					soundManager={ props.soundManager }
 					timerHidden={ 
 						storage ? storage.getSetting("timerHidden") : 'f' }
 					return={ () => {trocarPagina(false,refScrollable)}}/>
