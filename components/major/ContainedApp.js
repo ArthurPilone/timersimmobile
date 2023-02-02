@@ -43,7 +43,10 @@ function ContainedApp(props) {
 					<SettingsOverlay 
 						style={estilo.topLeft} 
 						storage={storage} 
-						saveAndQuit={() => {toggleSettings(false);setScrollable(previouslyScrollable)} }/>}
+						saveAndQuit={() => {toggleSettings(false);setScrollable(previouslyScrollable)} }
+						toggleSoundsCallback={(v) => {props.soundManager.setSoundsEnabled(v)}}
+					/>
+				}
 				<HomeScreen 
 					criaTimer={async (duracao) => {
 						timer.free();

@@ -12,6 +12,7 @@ class SoundManager {
 	
 	constructor(){
 		this.sounds = {}
+		this.soundsEnabled = true;
 		this.loadSounds()
 	}
 
@@ -28,11 +29,18 @@ class SoundManager {
 	}
 
 	playSound(key){
+		if(! this.soundsEnabled){
+			return;
+		}
 		this.sounds['desgrudar'].setVolume(0.25)
 		this.sounds[key].play((success) => {
 			if(! success){
 				console.log("Não consegui tocar um áudio")
 			}
 		})
+	}
+
+	setSoundsEnabled(val){
+		this.soundsEnabled = val;
 	}
 }

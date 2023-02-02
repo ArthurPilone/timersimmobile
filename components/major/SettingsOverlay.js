@@ -19,13 +19,14 @@ function SettingsOverlay(props) {
 	let [theme, setTheme] =  React.useState(defaultSettings[0])
 	let [realistic, setRealistic] =  React.useState(defaultSettings[1])
 	let [timerHidden, setTimerHidden] =  React.useState(defaultSettings[2])
-	//let [sounds, setSounds] =  React.useState( await optionsStorage.getSetting('sounds'))
+	let [soundsEnabled, setSoundsEnabled] =  React.useState(defaultSettings[3])
 	//let [pushNotif, setPushNotif] =  React.useState( await optionsStorage.getSetting('pushNotif'))
 
 	React.useEffect(() => {
 		optionsStorage.getSetting('theme').then((v) => {setTheme(v)})
 		optionsStorage.getSetting('realistic').then((v) => {setRealistic(v)})
 		optionsStorage.getSetting('timerHidden').then((v) => {setTimerHidden(v)})
+		optionsStorage.getSetting('soundsEnabled').then((v) => {setSoundsEnabled(v)})
     },[])
 
 	return (
@@ -82,6 +83,20 @@ function SettingsOverlay(props) {
 									let option = v? 't' : 'f';
 									setTimerHidden(option)
 									optionsStorage.saveSetting('timerHidden',option)
+								} }/>
+						</View>
+						<View style={estilo.optionsRow}>
+							<Text style={estilo.texto}>
+								Efeitos Sonoros
+							</Text>
+							<BooleanInput 
+								val={soundsEnabled == 't'}
+								callback={
+								(v) => {
+									let option = v? 't' : 'f'
+									setSoundsEnabled(option)
+									optionsStorage.saveSetting('soundsEnabled',option)
+									props.toggleSoundsCallback(v)
 								} }/>
 						</View>
 						<Botao texto="Salvar Mudanças" callback={props.saveAndQuit}/>
