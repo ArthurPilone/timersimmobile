@@ -25,6 +25,7 @@ function HomeScreen(props) {
 						 callback={() => {
 							props.criaTimer(tempoProva)
 							props.proxPagina()
+							props.setTestEnded(false)
 							setTimeout(() => {props.setTestActive(false)}, 150 )
 						}} />
 					{props.testActive && 

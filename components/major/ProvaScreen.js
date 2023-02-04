@@ -23,9 +23,7 @@ function ProvaScreen(props){
 
 	let [paused, setPaused] = React.useState(false)
 
-	let [testEnded, setTestEnd] = React.useState(false)
-
-	timer.loadNotifiers(setNextTag,setPaused,() => {setTestEnd(true)})
+	timer.loadNotifiers(setNextTag,setPaused,() => {props.setTestEnded(true)})
 	timer.loadSoundCallbacks(
 		() => {props.soundManager.playSound('desgrudar')},
 		() => {props.soundManager.playSound('sirene')})
@@ -35,14 +33,14 @@ function ProvaScreen(props){
 			{({estilo, trocaTema}) => (
 				<View style={[estilo.container, estilo.page]}>
 					{timerAvaliable &&
-						<WrappedTimer timer={timer} testEnded={testEnded}/>
+						<WrappedTimer timer={timer} testEnded={props.testEnded}/>
 					}
 					<TestController 
 						testActive={props.testActive}
 						setTestActive={props.setTestActive} 
 						timer={timer}
 						paused={paused}
-						testEnded={testEnded}/>
+						testEnded={props.testEnded}/>
 					<EtiquetasContainer tags={timer.tags} nextTag={nextTestTag}/>
 					<IconeBotao 
 						estiloLayout={estilo.topLeft}

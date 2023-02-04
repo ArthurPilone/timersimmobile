@@ -22,6 +22,7 @@ function ContainedApp(props) {
 	let [timer, setTimer] = React.useState(new Timer(0))
 
 	let [testActive, setTestActive] = React.useState(false)
+	let [testEnded, setTestEnded] = React.useState(false)
 
 	let [settingsOverlayed, toggleSettings] = React.useState(false)
 
@@ -56,12 +57,15 @@ function ContainedApp(props) {
 					}
 					testActive={ testActive }
 					setTestActive={ setTestActive }
+					setTestEnded={ setTestEnded }
 					proxPagina={ () => {trocarPagina(true,refScrollable)}}
 				/>
 				<ProvaScreen 
 					timerProva={ timer } 
 					testActive={ testActive }
 					setTestActive={ setTestActive }
+					testEnded={ testEnded }
+					setTestEnded={ setTestEnded }
 					soundManager={ props.soundManager }
 					timerHidden={ 
 						storage ? storage.getSetting("timerHidden") : 'f' }
