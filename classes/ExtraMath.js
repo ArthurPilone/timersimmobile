@@ -2,7 +2,8 @@ export {ExtraMath as ExtraMath}
 
 const ExtraMath  = {
 	gaussianRandom,
-	clamp
+	clamp,
+	minutesToMs
 }
 
 // The following function was taken from:
@@ -22,4 +23,8 @@ function clamp(val,min,max){
 	}else{
 		return val
 	}
+}
+
+function minutesToMs(min){
+	return 60000*min;
 }
