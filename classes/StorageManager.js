@@ -2,8 +2,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export {StorageManager as StorageManager, defaultSettings}
 
-const settings = ['theme', 'timerHidden', 'realistic', 'soundsEnabled']
-const defaultSettings = ['l','f','f','t']
+const settings = ['theme', 'timerHidden', 'realistic', 'soundsEnabled','pushNotif']
+const defaultSettings = ['l','f','f','t','t']
 
 class StorageManager {
 

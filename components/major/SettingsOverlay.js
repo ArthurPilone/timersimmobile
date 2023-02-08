@@ -1,12 +1,13 @@
 import * as React from 'react';
 
-import { Text,View } from 'react-native';
+import { Text, View, Pressable, Linking } from 'react-native';
 
 import { ContextoTema } from '../../contextoTema';
 import { BooleanInput } from '../minor/BooleanInput.js';
 import { Botao } from '../minor/Botao';
 
 import { defaultSettings } from '../../classes/StorageManager';
+import { testNotificationsManager } from "../../classes/TestNotificationsManager"
 
 export { SettingsOverlay as SettingsOverlay }
 
@@ -16,17 +17,21 @@ function SettingsOverlay(props) {
 
 	let optionsStorage = props.storage
 
-	let [theme, setTheme] =  React.useState(defaultSettings[0])
-	let [realistic, setRealistic] =  React.useState(defaultSettings[1])
-	let [timerHidden, setTimerHidden] =  React.useState(defaultSettings[2])
-	let [soundsEnabled, setSoundsEnabled] =  React.useState(defaultSettings[3])
-	//let [pushNotif, setPushNotif] =  React.useState( await optionsStorage.getSetting('pushNotif'))
+	let [theme, setTheme] = React.useState(defaultSettings[0])
+	let [realistic, setRealistic] = React.useState(defaultSettings[1])
+	let [timerHidden, setTimerHidden] = React.useState(defaultSettings[2])
+	let [soundsEnabled, setSoundsEnabled] = React.useState(defaultSettings[3])
+	let [pushNotif, setPushNotif] = React.useState(defaultSettings[4])
 
 	React.useEffect(() => {
 		optionsStorage.getSetting('theme').then((v) => {setTheme(v)})
 		optionsStorage.getSetting('realistic').then((v) => {setRealistic(v)})
 		optionsStorage.getSetting('timerHidden').then((v) => {setTimerHidden(v)})
 		optionsStorage.getSetting('soundsEnabled').then((v) => {setSoundsEnabled(v)})
+		optionsStorage.getSetting('pushNotif').then((v) => {
+			setPushNotif(v);
+			testNotificationsManager.toggleNotifications(v == 't')
+		})
     },[])
 
 	return (
@@ -97,6 +102,27 @@ function SettingsOverlay(props) {
 									setSoundsEnabled(option)
 									optionsStorage.saveSetting('soundsEnabled',option)
 									props.toggleSoundsCallback(v)
+								} }/>
+						</View>
+						<View style={estilo.optionsRow}>
+							<View style={{width:"80%"}}>
+								<Text style={estilo.texto}>
+									Notificações
+								</Text>
+								<Pressable onPressIn={() => {Linking.openURL("https://timersim.com")}}>
+								<Text style={estilo.textoLeve}>
+									Em caso de problemas com notificações, acesse: timersim.com/notificacoes
+								</Text>
+								</Pressable>		
+							</View>
+							<BooleanInput 
+								val={pushNotif == 't'}
+								callback={
+								(v) => {
+									let option = v? 't' : 'f';
+									setPushNotif(option)
+									optionsStorage.saveSetting('pushNotif', option)
+									testNotificationsManager.toggleNotifications(v)
 								} }/>
 						</View>
 						<Botao texto="Salvar Mudanças" callback={props.saveAndQuit}/>

@@ -6,7 +6,12 @@ export {testNotificationsManager as testNotificationsManager}
 
 class TestNotificationsManager {
 	
+	constructor(enabled){
+		this.notifsEnabled = enabled
+	}
+
 	buildNotifs(tags, tagRemotion, now, remainingTestTime, realistic){
+		if(! this.notifsEnabled){ return }
 		tags.forEach((val,index) => {
 			let tagMs = ExtraMath.minutesToMs(tagRemotion[index])
 			let tagTime = [(val-(val % 60))/60 , val % 60]
@@ -17,6 +22,7 @@ class TestNotificationsManager {
 	}
 
 	scheduleNotif(tagTime, fireDate, realistic){
+		if(! this.notifsEnabled){ return }
 		let tempoRestante = tagTime[0] > 0 ? tagTime[0] + " horas e " : "" 
 		tempoRestante += tagTime[1] + (tagTime[1]==1 ? " minuto" : " minutos")
 
@@ -63,6 +69,13 @@ class TestNotificationsManager {
 
 	clearNotifications(){
 		PushNotification.cancelAllLocalNotifications()
+	}
+
+	toggleNotifications(val){
+		this.notifsEnabled = val
+		if (! val) {
+			this.clearNotifications()
+		}
 	}
 }
 
