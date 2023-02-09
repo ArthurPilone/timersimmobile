@@ -1,16 +1,8 @@
-import { Image, Pressable } from 'react-native';
+import { Pressable } from 'react-native';
 
 import { ContextoTema } from '../../contextoTema';
 
-const icons = {
-	settings: require("../../assets/settingsIcon.png"),
-	back: require("../../assets/backIcon.png"),
-}
-
-const darkIcons = {
-	settings: require("../../assets/settingsIconDark.png"),
-	back: require("../../assets/backIconDark.png"),
-}
+import { Icon } from './Icon';
 
 export const IconeBotao = (props) => (
 	<ContextoTema.Consumer>
@@ -21,17 +13,13 @@ export const IconeBotao = (props) => (
 					alignItems: 'center'}]
 					} 
 				onPressIn={() => {props.callback(...props.args)}}>
-				<Image 
-					source={
-						estilo.subtitulo['color'] == "#fff" ? 
-						darkIcons[props.iconImage] : 
-						icons[props.iconImage]}    
-					style={{width: '100%', resizeMode: 'contain' }}/>
+				<Icon iconImage={props.iconImage}/>
 			</Pressable>
 		)}
 	</ContextoTema.Consumer>
 )
 
 IconeBotao.defaultProps = {
-	args: []
+	args: [],
+	estiloLayout: {},
 }

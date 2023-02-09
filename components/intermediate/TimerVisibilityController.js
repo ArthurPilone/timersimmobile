@@ -3,6 +3,7 @@ import * as React from 'react';
 import { Pressable, Text, Image } from 'react-native';
 
 import { ContextoTema } from '../../contextoTema';
+import { Icon } from '../minor/Icon';
 
 const VisibilityIcons = {
 	visible: require("../../assets/visible.png"), 
@@ -23,14 +24,7 @@ export const TimerVisibilityController = (props) => {
 					width: "90%"
 				}}
 				onPressIn={props.toggleVisibility}>
-				<Image
-					style={estilo.iconSize} 
-					source={VisibilityIcons[
-						estilo.subtitulo['color'] == "#fff" ? 
-							(props.timerVisible? "invisibleDark" : "visibleDark") :
-							(props.timerVisible? "invisible" : "visible")
-						]}
-					/>
+				<Icon iconImage={props.timerVisible? "invisible" : "visible"} />
 				<Text style={estilo.texto}>
 					{props.timerVisible? "Esconder Tempo de Prova" : "Revelar Tempo de Prova"}
 				</Text>
