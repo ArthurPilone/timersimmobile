@@ -1,3 +1,5 @@
+Todos os arquivos nesta página são de nossa autoria e cobertos pela licença MIT
+
 TimerSim.png             -  Nossa Autoria - [MIT]
 TimerSimDark.png         -  Nossa Autoria - [MIT]
 adaptvieIcon.png         -  Nossa Autoria - [MIT]
@@ -13,3 +15,4 @@ visible.png              -  Nossa Autoria - [MIT]
 visibleDark.png          -  Nossa Autoria - [MIT]
 invisible.png            -  Nossa Autoria - [MIT]
 invisibleDark.png        -  Nossa Autoria - [MIT]
+.......

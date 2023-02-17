@@ -46,6 +46,16 @@ const styleComum = StyleSheet.create({
 		marginTop: 0,
 	},
 
+	numericInput: {
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+		alignItems: 'center',
+		borderWidth: 0.2 * em,
+		borderRadius: 0.5 * em,
+		height: 3 * em,
+		width: 10 * em,
+	},
+
 	duracaoPicker: {
 		height: 25 * vh,
 		width: 80 * vw,
@@ -153,6 +163,10 @@ const styleComum = StyleSheet.create({
 
 		tempoProva: {
 			color: cores.corFonteRealce,
+		},
+
+		numericInput : {
+			borderColor: cores.borders
 		},
 
 		container: {
