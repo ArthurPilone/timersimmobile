@@ -11,7 +11,7 @@ class TestNotificationsManager {
 	}
 
 	buildNotifs(tags, tagRemotion, now, remainingTestTime, realistic){
-		if(! this.notifsEnabled){ return }
+		if(! this.notifsEnabled){return}
 		tags.forEach((val,index) => {
 			let tagMs = ExtraMath.minutesToMs(tagRemotion[index])
 			let tagTime = [(val-(val % 60))/60 , val % 60]

@@ -69,10 +69,17 @@ export default function App() {
         let sm = storageManager
 
         getInitialStyle(sm)
+
     },[])
 
     React.useEffect(() => {
         AppState.addEventListener('change', saveState);
+        storageManager.subscribeToSettingsChange('app','pushNotif',(v) => {
+            if(v == 't'){
+                console.log("atualizaram pra true e me notificaram!!")
+                timerApp.createScheduledNotifications()
+            }}
+        )
     })
 
     return (
