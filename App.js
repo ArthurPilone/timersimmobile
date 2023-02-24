@@ -3,20 +3,25 @@ import * as React from 'react';
 import { lightStyle, darkStyle } from "./style/style.js"
 
 import { ContextoTema } from "./contextoTema.js"
+import { ContextoTimer } from './contextoTimer';
 
 import { ContainedApp } from './components/major/ContainedApp.js';
 
 import { StorageManager } from './classes/StorageManager.js';
 import { SoundManager } from './classes/SoundManager.js';
+import { Timer } from './classes/Timer.js';
 
-import { StatusBar } from 'react-native';
+import { AppState, StatusBar } from 'react-native';
 
 export default function App() {
     
-    let [storageManager, setStorage] = React.useState(null)
+    let [storageManager, setStorage] = React.useState(new StorageManager())
     let [soundManager, setSoundManager] = React.useState(new SoundManager())
     let [estiloApp, settaTemaApp] = React.useState(lightStyle);
+    let [timerApp, settaTimerApp] = React.useState(new Timer(0,false))
     let [conteudoBarra, setConteudoBarra] = React.useState('dark-content'); 
+
+    let [valuesLoaded, setValuesLoaded] = React.useState(false)
 
     let trocaTemaAPP = (val) => {
         if(val == 'd'){
@@ -30,32 +35,58 @@ export default function App() {
         }
     }
 
+    let saveState = async (proximoEstado) => {
+		if(proximoEstado != 'background' && proximoEstado != 'inactive'){
+			return
+		}
+
+        storageManager.updateStateVariable('timerState',timerApp.exportTimerState())
+
+		await storageManager.saveState()
+	}
+
     React.useEffect(() => {
 
         async function getInitialStyle (sm) {
 
-            await sm.loadSettings()
+            await sm.loadAll()
 
             let estiloInicial = await sm.getSetting('theme')
 
             estiloInicial = (estiloInicial == "l") ? lightStyle : darkStyle;
     
             settaTemaApp(estiloInicial)
+
+            let newTimer = new Timer(0,false)
+
+            newTimer.reloadTimer(sm.getPreviousStateValue('timerState'))
+
+            settaTimerApp(newTimer)
+
+            setValuesLoaded(true)
         }
 
-        let sm = new StorageManager()
+        let sm = storageManager
 
         getInitialStyle(sm)
-
-        setStorage(sm)
     },[])
+
+    React.useEffect(() => {
+        AppState.addEventListener('change', saveState);
+    })
 
     return (
         <ContextoTema.Provider value={{
             estilo: estiloApp,
-            trocaTema: trocaTemaAPP}}>
-            <ContainedApp storageManager={storageManager} soundManager={soundManager}/>
+            trocaTema: trocaTemaAPP}}
+        >
+        <ContextoTimer.Provider value={{
+            timer: timerApp,
+            setTimer: settaTimerApp, 
+        }}>
+            <ContainedApp loaded={valuesLoaded} storageManager={storageManager} soundManager={soundManager}/>
             <StatusBar backgroundColor={estiloApp.card.backgroundColor} barStyle={conteudoBarra}/>
+        </ContextoTimer.Provider>
         </ContextoTema.Provider>
     );
 }

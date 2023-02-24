@@ -79,4 +79,4 @@ class TestNotificationsManager {
 	}
 }
 
-const testNotificationsManager = new TestNotificationsManager()
+const testNotificationsManager = new TestNotificationsManager(true)

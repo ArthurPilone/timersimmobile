@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { ContextoTema } from '../../contextoTema';
 
-import { Easing, Animated, View } from 'react-native';
+import { Animated, View } from 'react-native';
 import { TimerVisibilityController } from './TimerVisibilityController';
 import { TimerDisplay } from './TimerDisplay';
 
@@ -10,7 +10,12 @@ const animationDuration = 400
 
 export const WrappedTimer = (props) => {
 
-	let [timerVisible, setTimerVisible] = React.useState(true)
+	let [timerVisible, setTimerVisibleVal] = React.useState(true)
+
+	let setTimerVisible = (v) => {
+		setTimerVisibleVal(v)
+		props.storage.updateStateVariable('timerVisible', v ? 't' : 'f')
+	}
 
 	let timer = props.timer
 
@@ -18,8 +23,7 @@ export const WrappedTimer = (props) => {
 	let [provaM, setMValue] = React.useState(timer.getM())
 	let [provaH, setHValue] = React.useState(timer.getH())
 
-	timer.loadTimerRenderers(setSValue,setMValue,setHValue, 
-		() => {setTimerVisible(true)})
+	timer.loadTimerRenderers(setSValue,setMValue,setHValue)
 
 	const opacAnim = React.useRef(new Animated.Value(1)).current;
 
@@ -38,6 +42,10 @@ export const WrappedTimer = (props) => {
 			})
 		]).start();
 	};
+
+	React.useEffect(() => {
+		setTimerVisibleVal(props.storage.getPreviousStateValue('timerVisible') == 't')
+	},[])
 
 	return(
 		<ContextoTema.Consumer>

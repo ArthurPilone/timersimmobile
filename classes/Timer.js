@@ -22,14 +22,15 @@ class Timer {
 		this.renderS = null;
 		this.renderM = null;
 		this.renderH = null;
-		this.renderNextTag = null;
+		this.renderNextTag = () => {};
 		this.notifyPaused = () => {};
 		this.notifyTestEnded = () => {};
 
 		this.nextTagSoundCallback = () => {};
 		this.testEndSoundCallback = () => {};
 
-		this.notifiersLoaded = false;
+		this.provaScreenNotifiersLoaded = false;
+		this.pauseNotifierLoaded = false;
 		this.renderersLoaded = false;
 		this.soundsCallbacksLoaded = false;
 
@@ -37,6 +38,52 @@ class Timer {
 		this.realistic = realistic
 		this.buildTags()
 		this.buildTagRemotionMarkers(realistic);
+	}
+
+	exportTimerState(){
+		if((this.ultimoTick + "") == "Invalid Date"){
+			this.computeElapsedTime()
+		}
+
+		let stateString = ''
+		stateString += this.duracaoMin + ';'
+		stateString += this.restanteMs + ';'
+		stateString += (this.pausado? 't' : 'f') + ';'
+		stateString += this.ultimoTick + ';'
+		stateString += this.nextTag + ';'
+		stateString += (this.realistic? 't' : 'f') + ';'
+		stateString += this.tagRemotion + ';'
+
+		return stateString
+	}
+
+	reloadTimer(timerStateString){
+		let splitInfo = timerStateString.split(';')
+
+		this.duracaoMin = Number(splitInfo[0])
+		this.duracaoMs = 60000 * this.duracaoMin
+
+		this.restanteMs = Number(splitInfo[1])
+		this.updateRestantesFromMs()
+
+		this.pausado = (splitInfo[2] == 't')
+
+		this.ultimoTick = (new Date(Number(splitInfo[3]))).getTime()
+
+		this.nextTag = Number(splitInfo[4])
+
+		this.realistic = (splitInfo[5] == 't')
+
+		this.buildTags()
+
+		this.tagRemotion = (splitInfo[6]).split(',').map(Number)
+
+		this.provaScreenNotifiersLoaded = false;
+		this.pauseNotifierLoaded = false;
+		this.renderersLoaded = false;
+		this.soundsCallbacksLoaded = false;
+
+		this.passo()
 	}
 
 	buildTags(){
@@ -80,7 +127,7 @@ class Timer {
 
 	computeElapsedTime(){
 		let agora = Date.now()
-		elapsed = agora - this.ultimoTick
+		let elapsed = agora - this.ultimoTick
 		this.wasJustAway = elapsed > 300
 		this.restanteMs -= elapsed
 		this.ultimoTick = agora
@@ -100,6 +147,8 @@ class Timer {
 			this.checkForTestEnd()
 			this.updateView()
 			setTimeout(() => {this.passo()},100)
+		}else{
+			this.checkForTestEnd()
 		}	
 	}
 
@@ -165,15 +214,22 @@ class Timer {
 		
 	}
 
-	loadNotifiers(fnt,fps,fte){
-		if(this.notifiersLoaded) return;
+	loadPauseNotifier(fp){
+		if(this.pauseNotifierLoaded) return;
+		this.setNotifyPausedCallback(fp)
+		this.notifyPaused(this.pausado)
+		this.pauseNotifierLoaded = true;
+	}
 
-		this.setNotifyPausedCallback(fps)
+	loadProvaScreenNotifiers(fnt,fte){
+		if(this.provaScreenNotifiersLoaded) return;
+
 		this.setNextTagRenderCallback(fnt)
-		this.renderNextTag(0)
+		try{this.renderNextTag(this.nextTag)}
+		catch{}
 		this.setTestEndedCallback(fte)
 
-		this.notifiersLoaded = true
+		this.provaScreenNotifiersLoaded = true
 	}
 
 	loadSoundCallbacks(fNt, fTe){
@@ -183,13 +239,12 @@ class Timer {
 		this.testEndSoundCallback = fTe;
 	}
 
-	loadTimerRenderers(fs,fm,fh,fCallback){
+	loadTimerRenderers(fs,fm,fh){
 		if(this.renderersLoaded)	return;
 		this.setSRenderCallback(fs)
 		this.setMRenderCallback(fm)
 		this.setHRenderCallback(fh)
 		this.updateView()
-		fCallback()
 		this.renderersLoaded = true
 	}
 

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { lightStyle, darkStyle } from "./style/style.js"
+import { lightStyle } from "./style/style.js"
 
 export const ContextoTema = React.createContext({
 	estilo: lightStyle,
