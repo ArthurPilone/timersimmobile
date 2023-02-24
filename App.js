@@ -76,7 +76,6 @@ export default function App() {
         AppState.addEventListener('change', saveState);
         storageManager.subscribeToSettingsChange('app','pushNotif',(v) => {
             if(v == 't'){
-                console.log("atualizaram pra true e me notificaram!!")
                 timerApp.createScheduledNotifications()
             }}
         )

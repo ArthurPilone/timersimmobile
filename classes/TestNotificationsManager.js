@@ -23,7 +23,12 @@ class TestNotificationsManager {
 
 	scheduleNotif(tagTime, fireDate, realistic){
 		if(! this.notifsEnabled){ return }
-		let tempoRestante = tagTime[0] > 0 ? tagTime[0] + " horas e " : "" 
+		let tempoRestante = ""
+		if(tagTime[0] == 1){
+			tempoRestante = " hora e "
+		}else if(tagTime[0] > 1){
+			tempoRestante = " horas e "
+		}
 		tempoRestante += tagTime[1] + (tagTime[1]==1 ? " minuto" : " minutos")
 
 		let lastTag = (tagTime[0] == 0 && tagTime[1] == 0);
