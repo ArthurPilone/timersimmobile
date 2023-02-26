@@ -25,9 +25,9 @@ class TestNotificationsManager {
 		if(! this.notifsEnabled){ return }
 		let tempoRestante = ""
 		if(tagTime[0] == 1){
-			tempoRestante = " hora e "
+			tempoRestante = tagTime[0] + " hora e "
 		}else if(tagTime[0] > 1){
-			tempoRestante = " horas e "
+			tempoRestante = tagTime[0]+ " horas e "
 		}
 		tempoRestante += tagTime[1] + (tagTime[1]==1 ? " minuto" : " minutos")
 
