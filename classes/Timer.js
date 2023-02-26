@@ -174,14 +174,23 @@ class Timer {
 	}
 
 	checkTags(){
+		// Checar por passar mais de uma tag por vez!!!!
+
 		let nextTagMin = this.tags[this.nextTag]
-		if(nextTagMin >= (this.restanteMs / (60* 1000))){
+		let changed = false
+		while(nextTagMin >= (this.restanteMs / (60* 1000))){
 			this.nextTag+=1
+			nextTagMin = this.tags[this.nextTag]
+			changed = true
+		}
+
+		if(changed){
 			this.renderNextTag(this.nextTag)
 			if(! this.wasJustAway){
 				this.nextTagSoundCallback()
-			}		
+			}
 		}
+		
 	}
 
 	checkForTestEnd(){
