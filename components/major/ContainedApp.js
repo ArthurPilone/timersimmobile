@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { AppState, Dimensions, ScrollView } from 'react-native';
+import { View, Dimensions, ScrollView } from 'react-native';
 
 import { ContextoTema } from '../../contextoTema';
 
@@ -9,6 +9,8 @@ import { ProvaScreen } from "./ProvaScreen"
 import { SettingsOverlay } from './SettingsOverlay';
 
 import { IconeBotao } from "../minor/IconeBotao"
+
+import { NotificationsInfoPopup } from '../intermediate/NotificationsInfoPopup';
 
 export { ContainedApp as ContainedApp }
 
@@ -23,8 +25,8 @@ function ContainedApp(props) {
 	let refScrollable = React.useRef(null)
 	let [scrollable, setScrollable] =  React.useState(testActive || testEnded)
 	let [previouslyScrollable, setPreviouslyScrollable] =  React.useState(scrollable)
-	//let [refScrollable, setRefScrollable] = React.useState(null)
 
+	let [overlayActive, toggleOverlay] = React.useState(false)
 	let [settingsOverlayed, toggleSettings] = React.useState(false)
 
 	let setTestActive = (v) => {
@@ -51,23 +53,13 @@ function ContainedApp(props) {
 		if((storage.getPreviousStateValue('atTestScreen')) == 't'){
 			refScrollable.current.scrollTo({x: Dimensions.get('window').width, y: 0, animated: true})
 		}
+		storage.getPreviousStateValue
 	},[])
 
 	return (
 		<ContextoTema.Consumer>
 			{({estilo, trocaTema}) => (
 			<ScrollView ref={refScrollable} horizontal={true} pagingEnabled scrollEnabled={scrollable}>
-				{settingsOverlayed && 
-					<SettingsOverlay 
-						style={estilo.topLeft} 
-						storage={storage} 
-						saveAndQuit={() => {
-							toggleSettings(false);
-							setScrollable(previouslyScrollable);
-							} }
-						toggleSoundsCallback={(v) => {props.soundManager.setSoundsEnabled(v)}}
-					/>
-				}
 				<HomeScreen
 					newTestCallback= {() => {
 						setScrollable(true)
@@ -90,13 +82,31 @@ function ContainedApp(props) {
 					timerHidden={ 
 						storage ? storage.getSetting("timerHidden") : 'f' }
 					return={ () => {trocarPagina(false,refScrollable)}}/>
-				{settingsOverlayed || <IconeBotao 
+				{overlayActive || <IconeBotao 
 					estiloLayout={estilo.topLeft}
 					iconImage="settings" 
 					callback={() => {
+						toggleOverlay(true);
 						toggleSettings(true);
 						setPreviouslyScrollable(scrollable);
 						setScrollable(false)}}/>}
+				{overlayActive &&
+					<View style={[estilo.page, {position: 'absolute', top: 0, left: 0, alignItems: 'center',
+					justifyContent: 'center',backgroundColor: '#000000d0', zIndex: 2, elevation: 2 }]}>
+						{settingsOverlayed && 
+							<SettingsOverlay 
+								style={estilo.topLeft} 
+								storage={storage} 
+								saveAndQuit={() => {
+									toggleOverlay(false);
+									toggleSettings(false);
+									setScrollable(previouslyScrollable);
+									} }
+								toggleSoundsCallback={(v) => {props.soundManager.setSoundsEnabled(v)}}
+							/>
+						}
+					</View>
+				}
 			</ScrollView> )}
 		</ContextoTema.Consumer>
 	);
