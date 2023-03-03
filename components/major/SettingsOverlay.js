@@ -108,9 +108,9 @@ function SettingsOverlay(props) {
 							<Text style={estilo.texto}>
 								Notificações
 							</Text>
-							<Pressable onPressIn={() => {Linking.openURL("https://timersim.com")}}>
+							<Pressable onPressIn={() => {Linking.openURL("https://timersim.com/notificacoes.html")}}>
 							<Text style={estilo.textoLeve}>
-								Em caso de problemas com notificações, acesse: timersim.com/notificacoes
+								Em caso de problemas com notificações, acesse: timersim.com/notificacoes.html
 							</Text>
 							</Pressable>		
 						</View>
