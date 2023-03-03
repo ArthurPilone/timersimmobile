@@ -122,6 +122,9 @@ function SettingsOverlay(props) {
 								setPushNotif(option)
 								testNotificationsManager.toggleNotifications(v)
 								optionsStorage.saveSetting('pushNotif', option)
+								if(v){
+									optionsStorage.saveSetting('warnedNotif','f')
+								}
 							} }/>
 					</View>
 					<Botao texto="Salvar Mudanças" callback={props.saveAndQuit}/>

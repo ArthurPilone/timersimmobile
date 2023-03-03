@@ -2,8 +2,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export {StorageManager as StorageManager, defaultSettings}
 
-const settings = ['theme', 'timerHidden', 'realistic', 'soundsEnabled','pushNotif']
-const defaultSettings = ['l','f','f','t','t']
+const settings = ['theme', 'timerHidden', 'realistic', 'soundsEnabled','pushNotif','warnedNotif']
+const defaultSettings = ['l','f','f','t','t','f']
 
 const stateVariables = ['testActive','testEnded','timerState','timerVisible','atTestScreen']
 const initialStateVariablesValues = ['f','f','330;19200000;f;1677110361504;1;f;0,30;','t','f']
@@ -37,11 +37,19 @@ class StorageManager {
 	async loadSettings(){
 		for(i = 0; i < settings.length; i+= 1){
 			let key = settings[i];
+			let dafaultVal = defaultSettings[i]
 			try {
-				(AsyncStorage.getItem(key)).then((val) => {this.settings[key] = val})
+				Promise.race([
+					AsyncStorage.getItem(key).then((v) => {
+						if((typeof v === "undefined") || v == 'undefined' || v == null){
+							v = dafaultVal
+						}
+						this.settings[key] = v;}),
+					new Promise((resolve,reject) => {() => {setTimeout(reject('Setting not found in time: ' + key),READTIMEOUT)}})
+				])
 			} catch (e) {
-				console.log("Erro lendo settings: " + e)
-				this.settings[key] = defaultSettings[i]
+				this.settings[key] = dafaultVal
+				console.log("Erro lendo estado: " + e)
 			}
 		}
 	}
@@ -60,7 +68,7 @@ class StorageManager {
 					new Promise((resolve,reject) => {() => {setTimeout(reject('State variable not found in time: ' + key),READTIMEOUT)}})
 				])
 			} catch (e) {
-				this.appState[key] = initialStateVariablesValues[i]
+				this.appState[key] = dafaultVal
 				console.log("Erro lendo estado: " + e)
 			}
 		}

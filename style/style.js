@@ -40,6 +40,11 @@ const styleComum = StyleSheet.create({
 		padding: 1 * em,
 	},
 
+	alert: {
+		width: 70*vw,
+		height: 60*vh,
+	},
+
 	tempoProva: {
 		fontSize: 2.3*em,
 		margin: 0.5 * em,

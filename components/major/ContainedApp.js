@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { View, Dimensions, ScrollView } from 'react-native';
+import { View, Dimensions, ScrollView, Platform } from 'react-native';
 
 import { ContextoTema } from '../../contextoTema';
 
@@ -28,6 +28,7 @@ function ContainedApp(props) {
 
 	let [overlayActive, toggleOverlay] = React.useState(false)
 	let [settingsOverlayed, toggleSettings] = React.useState(false)
+	let [notificationsWarningOverlayed, toggleNotificationsWarning] = React.useState(false)
 
 	let setTestActive = (v) => {
 		setTestActiveVal(v);
@@ -53,7 +54,12 @@ function ContainedApp(props) {
 		if((storage.getPreviousStateValue('atTestScreen')) == 't'){
 			refScrollable.current.scrollTo({x: Dimensions.get('window').width, y: 0, animated: true})
 		}
-		storage.getPreviousStateValue
+		storage.loadSetting('warnedNotif').then((v) => {
+			if(v == 'f' && Platform.OS == 'android'){
+				toggleNotificationsWarning(true)
+				toggleOverlay(true)
+			}
+		})
 	},[])
 
 	return (
@@ -92,7 +98,7 @@ function ContainedApp(props) {
 						setScrollable(false)}}/>}
 				{overlayActive &&
 					<View style={[estilo.page, {position: 'absolute', top: 0, left: 0, alignItems: 'center',
-					justifyContent: 'center',backgroundColor: '#000000d0', zIndex: 2, elevation: 2 }]}>
+					justifyContent: 'center',backgroundColor: '#000000c0', zIndex: 2, elevation: 2 }]}>
 						{settingsOverlayed && 
 							<SettingsOverlay 
 								style={estilo.topLeft} 
@@ -104,6 +110,14 @@ function ContainedApp(props) {
 									} }
 								toggleSoundsCallback={(v) => {props.soundManager.setSoundsEnabled(v)}}
 							/>
+						}
+						{notificationsWarningOverlayed &&
+							<NotificationsInfoPopup 
+								ackCallback={() => {
+									toggleOverlay(false)
+									toggleNotificationsWarning(false)
+									storage.saveSetting('warnedNotif','t')
+								}}/>
 						}
 					</View>
 				}
