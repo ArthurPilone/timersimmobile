@@ -71,3 +71,6 @@ web-build/
 dist/
 
 # @end expo-cli
+
+# gradle.propertis - Hide Keystore
+android/gradle.properties
