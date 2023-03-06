@@ -3,12 +3,23 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 export {StorageManager as StorageManager, defaultSettings}
 
 const settings = ['theme', 'timerHidden', 'realistic', 'soundsEnabled','pushNotif','warnedNotif']
-const defaultSettings = ['l','f','f','t','t','f']
+const defaultSettings = {
+	'theme': 'l',
+	'timerHidden': 'f',
+	'realistic': 'f',
+	'soundsEnabled': 't',
+	'pushNotif': 't',
+	'warnedNotif': 'f',
+}
 
 const stateVariables = ['testActive','testEnded','timerState','timerVisible','atTestScreen']
-const initialStateVariablesValues = ['f','f','330;19200000;f;1677110361504;1;f;0,30;','t','f']
-
-const READTIMEOUT = 100
+const initialStateVariablesValues = {
+	'testActive': 'f',
+	'testEnded': 'f',
+	'timerState': '330;19200000;f;1677110361504;1;f;0,30;',
+	'timerVisible': 't',
+	'atTestScreen': 'f',
+}
 
 class StorageManager {
 
@@ -35,52 +46,43 @@ class StorageManager {
 	}
 
 	async loadSettings(){
-		for(i = 0; i < settings.length; i+= 1){
-			let key = settings[i];
-			let dafaultVal = defaultSettings[i]
-			try {
-				Promise.race([
-					AsyncStorage.getItem(key).then((v) => {
-						if((typeof v === "undefined") || v == 'undefined' || v == null){
-							v = dafaultVal
-						}
-						this.settings[key] = v;}),
-					new Promise((resolve,reject) => {() => {setTimeout(reject('Setting not found in time: ' + key),READTIMEOUT)}})
-				])
-			} catch (e) {
-				this.settings[key] = dafaultVal
-				console.log("Erro lendo estado: " + e)
-			}
+		for(let key of settings){
+			await this.loadSetting(key)
 		}
 	}
 
 	async loadPreviousState() {
-		for(i = 0; i < stateVariables.length; i+= 1){
-			let key = stateVariables[i];
-			let dafaultVal = initialStateVariablesValues[i]
-			try {
-				Promise.race([
-					AsyncStorage.getItem(key).then((v) => {
-						if((typeof v === "undefined") || v == 'undefined' || v == null){
-							v = dafaultVal
-						}
-						this.appState[key] = v;}),
-					new Promise((resolve,reject) => {() => {setTimeout(reject('State variable not found in time: ' + key),READTIMEOUT)}})
-				])
-			} catch (e) {
-				this.appState[key] = dafaultVal
-				console.log("Erro lendo estado: " + e)
-			}
+		for(key of stateVariables){
+			await this.loadPreviousStateVariable(key)
 		}
 	}
 
 	async loadSetting(key){
+		let val = null
 		try{
-			val = await AsyncStorage.getItem(key)
-			this.settings[key] = val
+			val = await AsyncStorage.getItem(key) // (typeof v === "undefined") || v == 'undefined'
+			if(val == null || val.toString() == 'undefined'){
+				this.settings[key] = defaultSettings[key]
+			}else{
+				this.settings[key] = val
+			}
 		}catch(e){
 			console.log("Erro carregando setting individual: " + e)
-			val = null;
+		}
+		return val
+	}
+
+	async loadPreviousStateVariable(key){
+		let val = null
+		try{
+			val = await AsyncStorage.getItem(key)
+			if(val == null || val.toString() == 'undefined'){
+				this.appState[key] = initialStateVariablesValues[key]
+			}else{
+				this.appState[key] = val
+			}
+		}catch(e){
+			console.log("Erro carregando estado individual: " + e)
 		}
 		return val
 	}
@@ -95,10 +97,6 @@ class StorageManager {
 
 	getPreviousStateValue(key){
 		return this.appState[key]
-	}
-
-	updateStateVariable(key,val) {
-		this.appState[key] = val
 	}
 
 	saveSetting(key,val){
@@ -117,6 +115,10 @@ class StorageManager {
 				}
 			}
 		}
+	}
+
+	updateStateVariable(key,val) {
+		this.appState[key] = val
 	}
 
 	async saveState(){

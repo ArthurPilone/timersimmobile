@@ -47,28 +47,30 @@ export default function App() {
 
     React.useEffect(() => {
 
-        async function getInitialStyle (sm) {
+        let sm = storageManager;
 
+        let loadValues = async () =>{
             await sm.loadAll()
 
-            let estiloInicial = await sm.getSetting('theme')
-
-            estiloInicial = (estiloInicial == "l") ? lightStyle : darkStyle;
-    
-            settaTemaApp(estiloInicial)
-
             let newTimer = new Timer(0,false)
+        
+            let stringArmazenada = sm.getPreviousStateValue('timerState')
 
-            newTimer.reloadTimer(sm.getPreviousStateValue('timerState'))
+            console.log("String armazenada: " + stringArmazenada)
+
+            newTimer.reloadTimer(stringArmazenada)
 
             settaTimerApp(newTimer)
+
+            sm.getSetting('theme').then((v) => {
+                let estiloInicial = (v == "l") ? lightStyle : darkStyle;
+                settaTemaApp(estiloInicial)
+            })
 
             setValuesLoaded(true)
         }
 
-        let sm = storageManager
-
-        getInitialStyle(sm)
+        loadValues()
 
     },[])
 
