@@ -60,7 +60,7 @@ function ContainedApp(props) {
 				toggleOverlay(true)
 			}
 		})
-	},[])
+	},[props.loaded])
 
 	return (
 		<ContextoTema.Consumer>

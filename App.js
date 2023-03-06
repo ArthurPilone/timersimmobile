@@ -53,12 +53,8 @@ export default function App() {
             await sm.loadAll()
 
             let newTimer = new Timer(0,false)
-        
-            let stringArmazenada = sm.getPreviousStateValue('timerState')
 
-            console.log("String armazenada: " + stringArmazenada)
-
-            newTimer.reloadTimer(stringArmazenada)
+            newTimer.reloadTimer(sm.getPreviousStateValue('timerState'))
 
             settaTimerApp(newTimer)
 

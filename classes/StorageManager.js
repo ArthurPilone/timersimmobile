@@ -60,12 +60,11 @@ class StorageManager {
 	async loadSetting(key){
 		let val = null
 		try{
-			val = await AsyncStorage.getItem(key) // (typeof v === "undefined") || v == 'undefined'
+			val = await AsyncStorage.getItem(key) // 
 			if(val == null || val.toString() == 'undefined'){
-				this.settings[key] = defaultSettings[key]
-			}else{
-				this.settings[key] = val
+				val = defaultSettings[key]
 			}
+			this.settings[key] = val
 		}catch(e){
 			console.log("Erro carregando setting individual: " + e)
 		}
@@ -77,10 +76,9 @@ class StorageManager {
 		try{
 			val = await AsyncStorage.getItem(key)
 			if(val == null || val.toString() == 'undefined'){
-				this.appState[key] = initialStateVariablesValues[key]
-			}else{
-				this.appState[key] = val
+				val = initialStateVariablesValues[key]
 			}
+			this.appState[key] = val
 		}catch(e){
 			console.log("Erro carregando estado individual: " + e)
 		}
